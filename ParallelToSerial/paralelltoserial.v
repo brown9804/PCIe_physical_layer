@@ -19,7 +19,7 @@ reg in0, in1, in2, in3, in4, in5, in6, in7;
 reg dataflux1, dataflux2;
 reg [2:0] selector;
 
-// Si el dato es valido se llenan los paquetes de bits y sino se pasa BC
+// Si el dato es valido se llenan los bits del bus y sino se pasa BC
  always @ (*)
         if(in_valid == 1)
         {in0, in1, in2, in3, in4, in5, in6, in7} = in;
