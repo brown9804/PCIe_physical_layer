@@ -9,15 +9,15 @@
       input clk,
       input reset,
       // Inputs, are 4
-      input wire [8:0] in0,
-      input wire [8:0] in1,
-      input wire [8:0] in2,
-      input wire [8:0] in3,
+      input wire [7:0] in0,
+      input wire [7:0] in1,
+      input wire [7:0] in2,
+      input wire [7:0] in3,
       // Outputs, are 4
-      output reg [8:0] out0,
-      output reg [8:0] out1,
-      output reg [8:0] out2,
-      output reg [8:0] out3
+      output reg [7:0] out0,
+      output reg [7:0] out1,
+      output reg [7:0] out2,
+      output reg [7:0] out3
   );
   // Each positive edge of the clock make these changes
   always @(posedge clk)

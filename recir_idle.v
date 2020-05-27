@@ -24,19 +24,19 @@ module recir_idle (
   output reg ff3
   );
 
- reg [8:0] recirblock;
- reg [8:0] go;
+ reg [7:0] recirblock;
+ reg [7:0] go;
 
  // Assign standar singnals
- idle_stand = 9'b001
- ff0_stand = 9'b010
- ff1_stand = 9'b011
- ff2_stand = 9'b100
- ff3_stand = 9'b101  
+ idle_stand = 8'b001
+ ff0_stand = 8'b010
+ ff1_stand = 8'b011
+ ff2_stand = 8'b100
+ ff3_stand = 8'b101  
 
 always @ (recirblock or sp)
  begin
-    go = 9'b000;
+    go = 8'b000;
 
     case(recirblock)
       idle_stand: begin
