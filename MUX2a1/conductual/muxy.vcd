@@ -1,0 +1,230 @@
+$date
+	Tue May 26 19:57:29 2020
+$end
+$version
+	Icarus Verilog
+$end
+$timescale
+	1ps
+$end
+$scope module bancoPruebas $end
+$var wire 2 ! valid [1:0] $end
+$var wire 1 " reset $end
+$var wire 8 # out [7:0] $end
+$var wire 8 $ in1 [7:0] $end
+$var wire 8 % in0 [7:0] $end
+$var wire 1 & clk $end
+$scope module Tb $end
+$var wire 8 ' out [7:0] $end
+$var reg 1 & clk $end
+$var reg 4 ( count [3:0] $end
+$var reg 8 ) in0 [7:0] $end
+$var reg 8 * in1 [7:0] $end
+$var reg 1 " reset $end
+$var reg 2 + valid [1:0] $end
+$upscope $end
+$scope module mux_behav $end
+$var wire 1 & clk $end
+$var wire 8 , in0 [7:0] $end
+$var wire 8 - in1 [7:0] $end
+$var wire 1 " reset $end
+$var wire 2 . valid [1:0] $end
+$var reg 8 / out [7:0] $end
+$var reg 1 0 selector $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+#0
+$dumpvars
+x0
+bx /
+b11 .
+b0 -
+b0 ,
+b11 +
+b0 *
+b0 )
+b0 (
+bx '
+0&
+b0 %
+b0 $
+bx #
+x"
+b11 !
+$end
+#10000
+00
+b0 #
+b0 '
+b0 /
+b11111111 %
+b11111111 )
+b11111111 ,
+b1 $
+b1 *
+b1 -
+1&
+0"
+#20000
+0&
+#30000
+b11111110 %
+b11111110 )
+b11111110 ,
+b10 $
+b10 *
+b10 -
+1&
+#40000
+0&
+#50000
+10
+b11111110 #
+b11111110 '
+b11111110 /
+b11111101 %
+b11111101 )
+b11111101 ,
+b11 $
+b11 *
+b11 -
+1"
+1&
+#60000
+0&
+#70000
+b1 (
+b11 #
+b11 '
+b11 /
+00
+1&
+#80000
+0&
+#90000
+10
+b11111101 #
+b11111101 '
+b11111101 /
+1&
+#100000
+0&
+#110000
+b11 #
+b11 '
+b11 /
+00
+1&
+#120000
+0&
+#130000
+10
+b11111101 #
+b11111101 '
+b11111101 /
+1&
+#140000
+0&
+#150000
+b0 !
+b0 +
+b0 .
+b11111100 %
+b11111100 )
+b11111100 ,
+b100 $
+b100 *
+b100 -
+b11 #
+b11 '
+b11 /
+00
+1&
+#160000
+0&
+#170000
+10
+b1 !
+b1 +
+b1 .
+b11111011 %
+b11111011 )
+b11111011 ,
+b101 $
+b101 *
+b101 -
+1&
+#180000
+0&
+#190000
+b10 !
+b10 +
+b10 .
+b11111010 %
+b11111010 )
+b11111010 ,
+b110 $
+b110 *
+b110 -
+00
+1&
+#200000
+0&
+#210000
+10
+b11 !
+b11 +
+b11 .
+b11111001 %
+b11111001 )
+b11111001 ,
+b111 $
+b111 *
+b111 -
+1&
+#220000
+0&
+#230000
+b0 !
+b0 +
+b0 .
+b11111000 %
+b11111000 )
+b11111000 ,
+b1000 $
+b1000 *
+b1000 -
+b111 #
+b111 '
+b111 /
+00
+1&
+#240000
+0&
+#250000
+10
+b1 !
+b1 +
+b1 .
+b11110111 %
+b11110111 )
+b11110111 ,
+b1001 $
+b1001 *
+b1001 -
+1&
+#260000
+0&
+#270000
+b10 !
+b10 +
+b10 .
+b11110110 %
+b11110110 )
+b11110110 ,
+b1010 $
+b1010 *
+b1010 -
+00
+1&

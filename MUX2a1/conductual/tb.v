@@ -18,45 +18,37 @@
 // Additional Comments:
 // 
 //////////////////////////////////////////////////////////////////////////////////
-`include "mux4x2_behav.v"
+`include "mux2x1_behav.v"
 `include "tester.v"
 
 module bancoPruebas();
+// conexiones de salidas
 
-
-wire [8:0] in0;	
-wire [8:0] in1;
-wire [8:0] in2;
-wire [8:0] in3;
-wire reset;	
-wire clk;						
-wire [8:0] out0;
-wire [8:0] out1;
-
-
+wire [7:0] in0;			// cable de entrada 1
+wire [7:0] in1;			// cable de entrada 2
+wire clk;				// reloj
+wire [7:0] out;			// salida conductual
+wire reset;				// reset
+wire [1:0] valid;		// valid 
 // conexiones e instanciado
 
-mux4x2_behav	 	mux_behav(		                       
-						.out0(out0),
-						.out1(out1),
+mux2x1_behav	 	mux_behav(		                       
+						.out(out),
 						.in0(in0),
                         .in1(in1),
-						.in2(in2),
-						.in3(in3),
+						.valid(valid),
 						.reset(reset),
 						.clk(clk)
 );
 
 
 
-tester Tb(       		.out0(out0),
-						.out1(out1),
-						.in0(in0),
-                        .in1(in1),
-						.in2(in2),
-						.in3(in3),
-						.reset(reset),
-						.clk(clk)
+tester Tb(       	.out(out),
+					.in0(in0),
+                    .in1(in1),
+					.valid(valid),
+					.reset(reset),
+					.clk(clk)
 );
 
 endmodule

@@ -19,32 +19,47 @@
 // 
 //////////////////////////////////////////////////////////////////////////////////
 `include "mux2x1_behav.v"
+`include "mux2x1_struct.v"
 `include "tester.v"
 
 module bancoPruebas();
 // conexiones de salidas
 
-wire selector;				// cables de conexion
-wire [8:0] in0;			// cable de entrada 1
-wire [8:0] in1;			// cable de entrada 2
+wire [7:0] in0;			// cable de entrada 1
+wire [7:0] in1;			// cable de entrada 2
 wire clk;				// reloj
-wire [8:0] out;		// salida conductual
-wire reset;
+wire [7:0] outc;		// salida conductual
+wire [7:0] outs;		// salida estructural
+wire reset;				// reset
+wire [1:0] valid;		// valid 
 // conexiones e instanciado
 
 mux2x1_behav	 	mux_behav(		                       
-						.out(out),
+						.out(outc),
 						.in0(in0),
                         .in1(in1),
+						.valid(valid),
+						.reset(reset),
+						.clk(clk)
+);
+
+
+mux2x1_struct 		mux_struct (
+						.out(outs),
+						.in0(in0),
+                        .in1(in1),
+						.valid(valid),
 						.reset(reset),
 						.clk(clk)
 );
 
 
 
-tester Tb(       	.out(out),
+tester Tb(       	.outc(outc),
+					.outs(outs),
 					.in0(in0),
                     .in1(in1),
+					.valid(valid),
 					.reset(reset),
 					.clk(clk)
 );

@@ -22,16 +22,17 @@ module mux2x1_behav(                 		// starts behavorial module
     
 	//INPUTS
 	input wire clk,         				// clock in @f
-	input wire [8:0] in0,					// datas in with valid at [0] pos
-	input wire [8:0] in1,
+	input wire [7:0] in0,					// datas in
+	input wire [7:0] in1,
+	input wire [1:0] valid,					// valid bits for the inputs
 	input reset,							// reset in
 
 	//OUTPUTS
-	output reg [8:0] out					// data out
+	output reg [7:0] out					// data out
  );
     
 	//AUXILIARY
-	reg selector;
+	reg selector;								// automatic selector
     
     // AUTOMATIC SELECTOR LOGIC
 	always @(posedge clk) begin					// triggered at clk or by pressing the reset button
@@ -49,20 +50,20 @@ module mux2x1_behav(                 		// starts behavorial module
             out <= 0;
 		end else begin
 			if(selector) begin								// MUX select in1 
-				if(in1[0]) begin							// checking valid bit for in1
+				if(valid[1]) begin							// checking valid bit for in1
 					out <= in1;								// spreading signal in1
 				end else begin
-							out <= {out[8:1], in1[0]};		// if valid=0 keep the last dataout, rewriting valid bit, just in case.
+							out <= out;						// if valid = 0 keep the last dataout
 						end
 			end else begin									// MUX select in0
-				if (in0[0]) begin							// checking valid bit for in0
+				if (valid[0]) begin							// checking valid bit for in0
 					out <= in0;								// spreading signal in0
 				end 
 				else begin
-					out <= {out[8:1], in0[0]};		// if valid=0 keep the last dataout, rewriting valid bit, just in case.
+					out <= out;								// if valid=0 keep the last dataout.
 				end
 			end 
 		end
 	end
 
-endmodule                               // FIN
+endmodule                               // MUX2X1

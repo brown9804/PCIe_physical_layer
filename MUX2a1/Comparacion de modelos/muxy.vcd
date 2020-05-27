@@ -1,0 +1,682 @@
+$date
+	Fri May 22 13:44:11 2020
+$end
+$version
+	Icarus Verilog
+$end
+$timescale
+	1ps
+$end
+$scope module BUF $end
+$var wire 1 ! A $end
+$var wire 1 " Y $end
+$upscope $end
+$scope module DFFSR $end
+$var wire 1 # C $end
+$var wire 1 $ D $end
+$var wire 1 % R $end
+$var wire 1 & S $end
+$var reg 1 ' Q $end
+$upscope $end
+$scope module NAND $end
+$var wire 1 ( A $end
+$var wire 1 ) B $end
+$var wire 1 * Y $end
+$upscope $end
+$scope module NOR $end
+$var wire 1 + A $end
+$var wire 1 , B $end
+$var wire 1 - Y $end
+$upscope $end
+$scope module NOT $end
+$var wire 1 . A $end
+$var wire 1 / Y $end
+$upscope $end
+$scope module bancoPruebas $end
+$var wire 2 0 valid [1:0] $end
+$var wire 1 1 reset $end
+$var wire 8 2 outs [7:0] $end
+$var wire 8 3 outc [7:0] $end
+$var wire 8 4 in1 [7:0] $end
+$var wire 8 5 in0 [7:0] $end
+$var wire 1 6 clk $end
+$scope module Tb $end
+$var wire 8 7 outs [7:0] $end
+$var wire 8 8 outc [7:0] $end
+$var reg 1 9 checker $end
+$var reg 1 6 clk $end
+$var reg 4 : count [3:0] $end
+$var reg 8 ; in0 [7:0] $end
+$var reg 8 < in1 [7:0] $end
+$var reg 1 1 reset $end
+$var reg 2 = valid [1:0] $end
+$upscope $end
+$scope module mux_behav $end
+$var wire 1 6 clk $end
+$var wire 8 > in0 [7:0] $end
+$var wire 8 ? in1 [7:0] $end
+$var wire 1 1 reset $end
+$var wire 2 @ valid [1:0] $end
+$var reg 8 A out [7:0] $end
+$var reg 1 B selector $end
+$upscope $end
+$scope module mux_struct $end
+$var wire 1 C _02_ $end
+$var wire 1 6 clk $end
+$var wire 8 D in0 [7:0] $end
+$var wire 8 E in1 [7:0] $end
+$var wire 1 1 reset $end
+$var wire 2 F valid [1:0] $end
+$var wire 1 G selector $end
+$var wire 8 H out [7:0] $end
+$var wire 8 I _05_ [7:0] $end
+$var wire 8 J _04_ [7:0] $end
+$var wire 8 K _03_ [7:0] $end
+$var wire 1 L _01_ $end
+$var wire 8 M _00_ [7:0] $end
+$scope module _40_ $end
+$var wire 1 6 C $end
+$var wire 1 N D $end
+$var reg 1 O Q $end
+$upscope $end
+$scope module _41_ $end
+$var wire 1 6 C $end
+$var wire 1 P D $end
+$var reg 1 Q Q $end
+$upscope $end
+$scope module _42_ $end
+$var wire 1 6 C $end
+$var wire 1 R D $end
+$var reg 1 S Q $end
+$upscope $end
+$scope module _43_ $end
+$var wire 1 6 C $end
+$var wire 1 T D $end
+$var reg 1 U Q $end
+$upscope $end
+$scope module _44_ $end
+$var wire 1 6 C $end
+$var wire 1 V D $end
+$var reg 1 W Q $end
+$upscope $end
+$scope module _45_ $end
+$var wire 1 6 C $end
+$var wire 1 X D $end
+$var reg 1 Y Q $end
+$upscope $end
+$scope module _46_ $end
+$var wire 1 6 C $end
+$var wire 1 Z D $end
+$var reg 1 [ Q $end
+$upscope $end
+$scope module _47_ $end
+$var wire 1 6 C $end
+$var wire 1 \ D $end
+$var reg 1 ] Q $end
+$upscope $end
+$scope module _48_ $end
+$var wire 1 6 C $end
+$var wire 1 L D $end
+$var reg 1 G Q $end
+$upscope $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+#0
+$dumpvars
+x]
+0\
+x[
+0Z
+xY
+0X
+xW
+0V
+xU
+0T
+xS
+0R
+xQ
+0P
+xO
+0N
+b0 M
+xL
+b0 K
+b0 J
+b0 I
+bx H
+xG
+b11 F
+b0 E
+b0 D
+xC
+xB
+bx A
+b11 @
+b0 ?
+b0 >
+b11 =
+b0 <
+b0 ;
+b0 :
+x9
+bx 8
+bx 7
+06
+b0 5
+b0 4
+bx 3
+bx 2
+x1
+b11 0
+z/
+z.
+x-
+z,
+z+
+x*
+z)
+z(
+x'
+z&
+z%
+z$
+z#
+z"
+z!
+$end
+#10000
+1C
+b0 3
+b0 8
+b0 A
+0B
+0O
+0Q
+0S
+0U
+0W
+0Y
+0[
+b0 2
+b0 7
+b0 H
+0]
+0G
+19
+0L
+16
+01
+#20000
+06
+#30000
+16
+#40000
+06
+#50000
+16
+#60000
+06
+#70000
+b11111111 K
+b11111111 J
+b1 I
+b11111111 5
+b11111111 ;
+b11111111 >
+b11111111 D
+b1 4
+b1 <
+b1 ?
+b1 E
+16
+#80000
+06
+#90000
+16
+#100000
+06
+#110000
+16
+#120000
+06
+#130000
+16
+#140000
+06
+#150000
+b11111110 K
+b11111110 J
+b10 I
+b11111110 5
+b11111110 ;
+b11111110 >
+b11111110 D
+b10 4
+b10 <
+b10 ?
+b10 E
+16
+#160000
+06
+#170000
+16
+#180000
+06
+#190000
+16
+#200000
+06
+#210000
+16
+#220000
+06
+#230000
+1N
+b11111101 K
+b11111101 J
+b11 I
+b11111101 5
+b11111101 ;
+b11111101 >
+b11111101 D
+b11 4
+b11 <
+b11 ?
+b11 E
+0P
+1R
+1T
+1V
+1X
+1Z
+1\
+b11111101 M
+1L
+11
+16
+#240000
+06
+#250000
+b1 :
+0\
+0Z
+0X
+0V
+0T
+0R
+1P
+b11 M
+0L
+b11 K
+0C
+b11111101 3
+b11111101 8
+b11111101 A
+1B
+1O
+1S
+1U
+1W
+1Y
+1[
+b11111101 2
+b11111101 7
+b11111101 H
+1]
+1G
+16
+#260000
+06
+#270000
+1\
+1Z
+1X
+1V
+1T
+1R
+0P
+b11111101 M
+1L
+b11111101 K
+1C
+0G
+0]
+0[
+0Y
+0W
+0U
+0S
+b11 2
+b11 7
+b11 H
+1Q
+b11 3
+b11 8
+b11 A
+0B
+16
+#280000
+06
+#290000
+0\
+0Z
+0X
+0V
+0T
+0R
+1P
+b11 M
+0L
+b11 K
+0C
+b11111101 3
+b11111101 8
+b11111101 A
+1B
+0Q
+1S
+1U
+1W
+1Y
+1[
+b11111101 2
+b11111101 7
+b11111101 H
+1]
+1G
+16
+#300000
+06
+#310000
+1\
+1Z
+1X
+1V
+1T
+1R
+0P
+b11111101 M
+1L
+b11111101 K
+1C
+0G
+0]
+0[
+0Y
+0W
+0U
+0S
+b11 2
+b11 7
+b11 H
+1Q
+b11 3
+b11 8
+b11 A
+0B
+16
+#320000
+06
+#330000
+1\
+1Z
+1X
+1V
+1T
+1R
+0P
+b11111101 M
+0L
+b11111101 I
+b11111101 K
+0C
+b11111101 3
+b11111101 8
+b11111101 A
+1B
+0Q
+1S
+1U
+1W
+1Y
+1[
+b11111101 2
+b11111101 7
+b11111101 H
+1]
+1G
+b0 0
+b0 =
+b0 @
+b0 F
+b11111100 5
+b11111100 ;
+b11111100 >
+b11111100 D
+b100 4
+b100 <
+b100 ?
+b100 E
+16
+#340000
+06
+#350000
+1P
+0R
+b11111011 M
+b11111011 K
+b11111011 J
+1L
+1C
+b1 0
+b1 =
+b1 @
+b1 F
+b11111011 5
+b11111011 ;
+b11111011 >
+b11111011 D
+b101 4
+b101 <
+b101 ?
+b101 E
+0G
+0B
+16
+#360000
+06
+#370000
+0N
+0T
+0V
+0X
+0Z
+0\
+1R
+1P
+b110 M
+0L
+b110 I
+b110 K
+0C
+b11111011 3
+b11111011 8
+b11111011 A
+1B
+1Q
+b11111011 2
+b11111011 7
+b11111011 H
+0S
+1G
+b10 0
+b10 =
+b10 @
+b10 F
+b11111010 5
+b11111010 ;
+b11111010 >
+b11111010 D
+b110 4
+b110 <
+b110 ?
+b110 E
+16
+#380000
+06
+#390000
+0P
+1\
+1Z
+1X
+1V
+1T
+0R
+1N
+b11111001 M
+b11111001 J
+b111 I
+1L
+b11111001 K
+1C
+b11 0
+b11 =
+b11 @
+b11 F
+b11111001 5
+b11111001 ;
+b11111001 >
+b11111001 D
+b111 4
+b111 <
+b111 ?
+b111 E
+0G
+0]
+0[
+0Y
+0W
+0U
+1S
+b110 2
+b110 7
+b110 H
+0O
+b110 3
+b110 8
+b110 A
+0B
+16
+#400000
+06
+#410000
+b10 :
+1\
+1Z
+1X
+1V
+1T
+0R
+0P
+b11111001 M
+0L
+b11111001 I
+b11111001 K
+0C
+b11111001 3
+b11111001 8
+b11111001 A
+1B
+1O
+0Q
+0S
+1U
+1W
+1Y
+1[
+b11111001 2
+b11111001 7
+b11111001 H
+1]
+1G
+b0 0
+b0 =
+b0 @
+b0 F
+b11111000 5
+b11111000 ;
+b11111000 >
+b11111000 D
+b1000 4
+b1000 <
+b1000 ?
+b1000 E
+16
+#420000
+06
+#430000
+1P
+1R
+0T
+b11110111 M
+b11110111 K
+b11110111 J
+1L
+1C
+b1 0
+b1 =
+b1 @
+b1 F
+b11110111 5
+b11110111 ;
+b11110111 >
+b11110111 D
+b1001 4
+b1001 <
+b1001 ?
+b1001 E
+0G
+0B
+16
+#440000
+06
+#450000
+0N
+0V
+0X
+0Z
+0\
+1T
+0R
+1P
+b1010 M
+0L
+b1010 I
+b1010 K
+0C
+b11110111 3
+b11110111 8
+b11110111 A
+1B
+1Q
+1S
+b11110111 2
+b11110111 7
+b11110111 H
+0U
+1G
+b10 0
+b10 =
+b10 @
+b10 F
+b11110110 5
+b11110110 ;
+b11110110 >
+b11110110 D
+b1010 4
+b1010 <
+b1010 ?
+b1010 E
+16

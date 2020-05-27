@@ -1,5 +1,9 @@
 `timescale 1ns / 1ps
-`include "mux4x2_behav.v" // than include the mux2x1 
+`include "mux4x2_behav.v"	 // than include the mux2x1 
+`include "ff2in2o.v"	
+`include "ff4in4o.v"
+`include "ff1in1o.v"	
+
 //////////////////////////////////////////////////////////////////////////////////
 // Company: U.C.R EIE
 // Engineer: Brandon Esquivel Molina
@@ -22,27 +26,27 @@
 module mux4x1_behav(                		// starts behavorial module
     
 	//INPUTS
-    input wire clk,							// clock in @f
-    input wire clk2f,						// clock in @2f
+    input wire clk1f,
+	input wire clk2f,						// clock in @2f
     input wire clk4f,						// clock in @4f
     input wire reset,        				// reset
-	input wire [8:0] in0,					// datas in with valid at [0] pos
-	input wire [8:0] in1,
-	input wire [8:0] in2,
-	input wire [8:0] in3,
-	input reset,							// reset in
-
+	input wire [7:0] in0,					// datas in with valid at [0] pos
+	input wire [7:0] in1,
+	input wire [7:0] in2,
+	input wire [7:0] in3,
+	input wire [3:0] valid,					// valid bits, 4bits, 1 per in
     //OUTPUTS
-	output reg [8:0] out,					// data out
+	output reg [7:0] out					// data out
  );
     
     //AUXILIARY/INTERNAL NODES
-	wire [8:0] n0, n1, n2, n3;				// Level 1 Internal Nodes
-	wire [8:0] n4, n5, n6, n7;				// Level 2 Internal Nodes
-	wire [8:0] wout0;						// Final stage Nodes
-
+	wire [7:0] n0, n1, n2, n3;				// Level 1 Internal Nodes
+	wire [7:0] n4, n5, n6, n7;				// Level 2 Internal Nodes
+	wire [7:0] wout;						// Final stage Nodes
+	wire [7:0] w;
+	supply1 [1:0] vcc;
 // Conection
-flipflop4 ff4(				.in0(in0),
+ff4in4o ff4(				.in0(in0),
 							.in1(in1),
 							.in2(in2),
 							.in3(in3),
@@ -50,7 +54,7 @@ flipflop4 ff4(				.in0(in0),
 							.out1(n1),
 							.out2(n2),
 							.out3(n3),
-							.clk(clk),
+							.clk(clk1f),
 							.reset(reset)
 
 ); 
@@ -61,36 +65,47 @@ mux4x2_behav mux_A(			.in0(n0),
 							.in3(n3),
 							.out0(n4),
 							.out1(n5),
+							.valid(valid),
 							.clk(clk2f),
 							.reset(reset)
+							//.validout(validout)
 
 ); 
  
 
-flipflop2 ff2(				.in0(n4),
+ff2in2o ff2(				.in0(n4),
 							.in1(n5),
 							.out0(n6),
 							.out1(n7),
 							.clk(clk2f),
 							.reset(reset)
-
 ); 
 
 
 
-mux2x1_behav mux_B(				.out(wout0),
+mux2x1_behav mux_B(				.out(w),
 								.in0(n6),
                         		.in1(n7),
+								.valid(vcc),			// always spread the ins, valid verified behind
 								.reset(reset),
 								.clk(clk4f)
 );
 
 
 
+ff1in1o ffs(					.in(w),
+								.out(wout),
+								.clk(clk4f),
+								.reset(reset)
+);
+
+
+
+
 
 //spreading final signal
-always @ (*) begin
-	out0 <=	wout0;
+always @ (posedge clk2f) begin
+	out <=	wout;
 end
 
 endmodule                               // Mux4x2
