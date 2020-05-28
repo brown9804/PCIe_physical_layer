@@ -37,10 +37,9 @@ module tester(
     initial begin
 		$dumpfile("muxy.vcd");																						// "dump" file
 		$dumpvars;																									// "dumpping" variables
-		$display ("\tclk32f,\tclk4f,\tin,\tout,\treset");														// print onces
-		$monitor($time,"\t%b\t%b\t%b\t%b\t%b",clk32f, clk4f, in, out, reset); 							// print everytime	
         
         // reset 
+
         repeat(2) begin
         @(posedge clk32f);
         end
@@ -83,6 +82,25 @@ module tester(
         in  <=  ~in;
         end
 
+        /*// se envia BC para indicar fin de palabra
+        @(posedge clk32f);
+        in  <=  1;
+        @(posedge clk32f);
+        in  <=  0;
+        @(posedge clk32f);
+        in  <=  1;
+        @(posedge clk32f);
+        in  <=  1;
+        @(posedge clk32f);
+        in  <=  1;
+        @(posedge clk32f);
+        in  <=  1;
+        @(posedge clk32f);
+        in  <=  0;
+        @(posedge clk32f);
+        in  <=  0;
+*/
+
         // Nueva palabra a enviar  -> EE -> 11101110
       @(posedge clk32f);
         in  <=  1;
@@ -100,9 +118,25 @@ module tester(
         in  <=  1;
         @(posedge clk32f);
         in  <=  0;
-        end
-
-
+    
+        /*// se envia BC para indicar fin de palabra
+        @(posedge clk32f);
+        in  <=  1;
+        @(posedge clk32f);
+        in  <=  0;
+        @(posedge clk32f);
+        in  <=  1;
+        @(posedge clk32f);
+        in  <=  1;
+        @(posedge clk32f);
+        in  <=  1;
+        @(posedge clk32f);
+        in  <=  1;
+        @(posedge clk32f);
+        in  <=  0;
+        @(posedge clk32f);
+        in  <=  0;
+*/
             // Nueva palabra a enviar  -> FF -> 11111111
         @(posedge clk32f);
         in  <=  1;
@@ -120,7 +154,6 @@ module tester(
         in  <=  1;
         @(posedge clk32f);
         in  <=  1;
-        end
 
 
         $finish;

@@ -1,9 +1,9 @@
 
-read_verilog mux4x1_behav.v
+read_verilog serieparalelo.v
 
 read_verilog -lib cmos_cells.v
 
-hierarchy -check -top mux4x1_behav
+hierarchy -check -top serieparalelo
 
 proc
 
@@ -29,4 +29,4 @@ clean
 
 stat -liberty cmos_cells.lib
 
-write_verilog mux4x1_struct_syn.v
+write_verilog serieparalelo_struct_syn.v

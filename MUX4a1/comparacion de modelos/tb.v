@@ -19,6 +19,7 @@
 // 
 //////////////////////////////////////////////////////////////////////////////////
 `include "mux4x1_behav.v"
+`include "mux4x1_struct.v"
 `include "tester.v"
 //`include "clks.v"
 
@@ -37,6 +38,7 @@ wire clk4f;
 wire clk;			// root clock
 wire [3:0] valid;					
 wire [7:0] out;
+wire [7:0] outs;
 
 
 // conexiones e instanciado
@@ -55,9 +57,25 @@ mux4x1_behav	 	mux_behav(
 						
 );
 
+mux4x1_struct	 	mux_struct(		                       
+						.out(outs),
+						.in0(in0),
+                        .in1(in1),
+						.in2(in2),
+						.in3(in3),
+						.valid(valid),
+						.reset(reset),
+						.clk4f(clk4f),
+						.clk2f(clk2f),
+						.clk1f(clk1f)
+						
+);
+
+
 
 
 tester Tb(       		.outc(out),
+						.outs(outs),
 						.in0(in0),
                         .in1(in1),
 						.in2(in2),
@@ -69,17 +87,5 @@ tester Tb(       		.outc(out),
 						.clk2f(clk2f),
 						.clk4f(clk4f)
 );
-
-
-
-/*
-clks clocks (
-				.clk(clk),
-				.clk1f(clk1f),
-				.clk2f(clk2f),
-				.clk4f(clk4f),
-				.reset(reset)
-
-);*/
 
 endmodule

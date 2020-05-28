@@ -35,7 +35,9 @@ output reg clk16f,
 output reg clk32f,
 output reg reset,
 	//INPUTS
-input [7:0] outc
+input [7:0] outc,
+
+input [7:0] outs
 //input [7:0] outs,
 );
 
@@ -47,8 +49,8 @@ reg clkf;
 initial begin
 		$dumpfile("muxy.vcd");																						// "dump" file
 		$dumpvars;																									// "dumpping" variables
-		$display ("clkf,\tin0,\tin1,\tin2,\tin3,\tvalid,\toutc,\tcountc,\treset");														// print onces
-		$monitor($time,"\t%b\t%b\t%b\t%b\t%b\t%b\t%b\t%b\t%b",clkf, in0, in1, in2, in3, valid, outc, countc, reset); 							// print everytime	
+		$display ("clkf,\tin0,\tin1,\tin2,\tin3,\tvalid,\toutc,\touts,\tcountc,\treset");														// print onces
+		$monitor($time,"\t%b\t%b\t%b\t%b\t%b\t%b\t%b\t%b\t%b",clkf, in0, in1, in2, in3, valid, outc, outs, countc, reset); 							// print everytime	
 		
 		
 		repeat (3) begin  			// dejando reset en 0 varios ciclos para evitar indeterminaciones y asegurarse que los flops se reseten bien
@@ -77,10 +79,9 @@ initial begin
 		@(posedge clk1f);	
 		{in2} <= 'h77;
 		
-		
 		@(posedge clk1f);
 		valid <= 4'b0010;
-		
+	
 		repeat (5) begin
 		@(posedge clk1f);				// testing static ins		
 		valid = 4'b1111;

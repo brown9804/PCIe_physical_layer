@@ -44,7 +44,11 @@ module mux4x1_behav(                		// starts behavorial module
 	wire [7:0] n4, n5, n6, n7;				// Level 2 Internal Nodes
 	wire [7:0] wout;						// Final stage Nodes
 	wire [7:0] w;
-	supply1 [1:0] vcc;
+	wire [1:0] v;
+	wire vv;
+	wire wv;
+	wire [1:0] validout;
+
 // Conection
 ff4in4o ff4(				.in0(in0),
 							.in1(in1),
@@ -67,8 +71,8 @@ mux4x2_behav mux_A(			.in0(n0),
 							.out1(n5),
 							.valid(valid),
 							.clk(clk2f),
-							.reset(reset)
-							//.validout(validout)
+							.reset(reset),
+							.validout(validout)
 
 ); 
  
@@ -81,30 +85,40 @@ ff2in2o ff2(				.in0(n4),
 							.reset(reset)
 ); 
 
+ff2in2o ff2v(				.in0(validout[0]),			// sincronizando valid
+							.in1(validout[1]),
+							.out0(v[0]),
+							.out1(v[1]),
+							.clk(clk2f),
+							.reset(reset)
+); 
+
+
 
 
 mux2x1_behav mux_B(				.out(w),
 								.in0(n6),
                         		.in1(n7),
-								.valid(vcc),			// always spread the ins, valid verified behind
+								.valid(v),	
 								.reset(reset),
-								.clk(clk4f)
+								.clk(clk4f),
+								.validout(vv)
 );
 
 
 
-ff1in1o ffs(					.in(w),
-								.out(wout),
+ff2in2o ff22(					.in0(w),
+								.in1(vv)
+								.out0(wout),
+								.out1(wv),
 								.clk(clk4f),
 								.reset(reset)
 );
 
 
 
-
-
 //spreading final signal
-always @ (posedge clk2f) begin
+always @ (*) begin
 	out <=	wout;
 end
 

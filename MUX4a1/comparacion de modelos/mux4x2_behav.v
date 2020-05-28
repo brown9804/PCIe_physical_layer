@@ -30,15 +30,18 @@ module mux4x2_behav(                	 // starts behavorial module
 	input wire [7:0] in3,
 	input wire [3:0] valid,					// valid bits, 4bits, 1 per in
 	input reset,							// reset in
-	output reg validout,
+	
     //OUTPUTS
 	output reg [7:0] out0,					// data out0
-	output reg [7:0] out1					// data out1
+	output reg [7:0] out1,					// data out1
+	output reg [1:0] validout
  );
     
     //AUXILIARY/INTERNAL NODES
 	wire [7:0] wout0;
 	wire [7:0] wout1;
+	wire validoutA, validoutB;
+
 
 // Conection
 mux2x1_behav mux_A(				.out(wout0),
@@ -46,7 +49,8 @@ mux2x1_behav mux_A(				.out(wout0),
                         		.in1(in1),
 								.reset(reset),
 								.valid(valid[1:0]),
-								.clk(clk)
+								.clk(clk),
+								.validout(validoutA)
 );
  
 mux2x1_behav mux_B(				.out(wout1),
@@ -54,13 +58,15 @@ mux2x1_behav mux_B(				.out(wout1),
                         		.in1(in3),
 								.reset(reset),
 								.valid(valid[3:2]),
-								.clk(clk)
+								.clk(clk),
+								.validout(validoutB)
 );
 
 //spreading final signal
 always @ (*) begin
 	out0 <=	wout0;
 	out1 <=	wout1;
+	validout <= {validoutB, validoutA};
 end
 
 endmodule                               // Mux4x2
