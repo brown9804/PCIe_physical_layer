@@ -19,6 +19,7 @@
 
 module tester(
     input wire [7:0] out,           // salida paralela de bus de 8 bits + valid
+input wire [7:0] outs,  
     input wire valid,               // + valid
     output reg in,                  // entrada bit a bit serial
     output reg reset,               // reset
@@ -36,10 +37,8 @@ module tester(
     
     initial begin
 		$dumpfile("muxy.vcd");																						// "dump" file
-		$dumpvars;																									// "dumpping" variables
-		$display ("\tclk32f,\tclk4f,\tin,\tout,\treset");														// print onces
-		$monitor($time,"\t%b\t%b\t%b\t%b\t%b",clk32f, clk4f, in, out, reset); 							// print everytime	
-        
+	$dumpvars;
+	
         // reset 
         repeat(2) begin
         @(posedge clk32f);
@@ -100,7 +99,6 @@ module tester(
         in  <=  1;
         @(posedge clk32f);
         in  <=  0;
-        end
 
 
             // Nueva palabra a enviar  -> FF -> 11111111
@@ -120,7 +118,7 @@ module tester(
         in  <=  1;
         @(posedge clk32f);
         in  <=  1;
-        end
+
 
 
         $finish;
@@ -143,6 +141,24 @@ module tester(
     initial clk4f <= 0;
     initial clk2f <= 0;
     initial clk1f <= 0;
+
+	
+
+	// checker
+reg test;
+
+always@(posedge clk) begin
+    if(out != outs)
+    begin
+       $display ("ERROR behavioral file and structural file are not the same");
+       test <= 1;
+     end // end display
+
+     else begin
+        test <= 0;
+      end //else
+end // always checker
+
 
 
     // Faster frequency
