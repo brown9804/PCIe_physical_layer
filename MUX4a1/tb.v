@@ -21,7 +21,7 @@
 `include "mux4x1_behav.v"
 `include "mux4x1_struct.v"
 `include "tester.v"
-//`include "clks.v"
+`include "cmos_cells.v"
 
 module bancoPruebas();
 

@@ -36,9 +36,8 @@ output reg clk32f,
 output reg reset,
 	//INPUTS
 input [7:0] outc,
-
-input [7:0] outs
-//input [7:0] outs,
+input [7:0] outs,
+input validout
 );
 
 	//Internal
@@ -47,20 +46,17 @@ reg [3:0] countc;
 reg clk;
 
 initial begin
-		$dumpfile("muxy.vcd");																						// "dump" file
-		$dumpvars;																									// "dumpping" variables
-		//$display ("clkf,\tin0,\tin1,\tin2,\tin3,\tvalid,\toutc,\touts,\tcountc,\treset");														// print onces
-		//$monitor($time,"\t%b\t%b\t%b\t%b\t%b\t%b\t%b\t%b\t%b",clkf, in0, in1, in2, in3, valid, outc, outs, countc, reset); 							// print everytime	
-		
-		
-		repeat (10) begin  			// dejando reset en 0 varios ciclos para evitar indeterminaciones y asegurarse que los flops se reseten bien
-		@(posedge clk1f)
-		reset = 0; 
-		end
+		$dumpfile("muxy.vcd");									// "dump" file
+		$dumpvars;												// "dumpping" variables	
+		repeat (6) begin
+		@(posedge clk);	
+		reset = 0;
+		end		
 
-		repeat (6) 					// Dando cuatro ciclos del reloj mas lento
-		@(posedge clk1f)
-		reset = 1;
+		repeat (6) begin																							// Repeat the test 3 times
+		@(posedge clk);																								// sync with clock																			 	
+		#4 reset = 1;
+		end
 
 
 		//repeat (15) begin
@@ -80,9 +76,8 @@ initial begin
 
 		@(posedge clk1f);	
 		{in2} <= 'h77;
-		
-		@(posedge clk1f);
 		valid <= 4'b0010;
+		
 	
 		repeat (5) begin
 		@(posedge clk1f);				// testing static ins		
@@ -96,16 +91,16 @@ initial begin
 	
 
 	// Initial Values
-	initial	in0			<= 7'b0;
-	initial in1			<= 7'b0;
-	initial in2			<= 7'b0;
-	initial in3			<= 7'b0;
+	initial	in0			<= 8'b0;
+	initial in1			<= 8'b0;
+	initial in2			<= 8'b0;
+	initial in3			<= 8'b0;
 	initial valid		<= 4'b1111;	
-	initial reset 		<= 0;
+	initial #2 reset 		<= 0;
 
 	// clock logic
 	initial	clk	 			<= 0;			// Initial value to avoid indeterminations
-	always	#1 clk				<= ~clk;		// toggle every 10ns
+	always	#5 clk			<= ~clk;		// toggle every 10ns
 
 	// Positive Transitions Counters
 	initial countc <= 0;

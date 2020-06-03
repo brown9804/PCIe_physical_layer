@@ -37,7 +37,8 @@ module mux4x1_behav(                		// starts behavorial module
 	input wire [7:0] in3,
 	input wire [3:0] valid,					// valid bits, 4bits, 1 per in
     //OUTPUTS
-	output reg [7:0] out					// data out
+	output reg [7:0] out,
+	output reg validout						// valid data out
  );
     
     //AUXILIARY/INTERNAL NODES
@@ -96,7 +97,7 @@ mux4x2_behav mux_A(			.in0(n0),			//entrando valids y data sinronizados
 							.valid(valid_n),
 							.clk(clk2f),
 							.reset(reset),
-							.valid_out(valid_out)
+							.validout(valid_out)
 
 ); 
  
@@ -130,7 +131,7 @@ mux2x1_behav  mux_B(
 								.valid(valid_21),	
 								.reset(reset),
 								.clk(clk4f),
-								.valid_out(v_out)
+								.validout(v_out)
 );
 
 
@@ -142,7 +143,8 @@ ff1in1o ff21(					.in(w),		// sincronizando data final
 );
 
 
-ff4in4ovalid ffvalidfinal(		.in0(v_out),		// sincronizando valids, solo se usa 1/4 entradas
+ff4in4ovalid ffvalidfinal(	
+							.in0(v_out),		// sincronizando valids, solo se usa 1/4 entradas
 							.out0(valid_final),
 							.clkf(clk4f),
 							.reset(reset)	
@@ -154,6 +156,7 @@ ff4in4ovalid ffvalidfinal(		.in0(v_out),		// sincronizando valids, solo se usa 1
 
 always @ (*) begin
 	out =	wout;
+	validout = valid_final;
 end
 
 endmodule                               // Mux4x1 behav
