@@ -22,7 +22,7 @@ run:
 	gtkwave muxy.vcd
 	echo listo!
 sed:
-	sed -e ' s/mux2x1_behav/mux2x1_struct/;  s/selector/selector_struct/' ./mux2x1_struct_syn.v >> mux2x1_struct.v
+	sed -e ' s/mux2x1_behav/mux2x1_struct/' ./mux2x1_struct_syn.v >> mux2x1_struct.v
 	
 autosyn: 
 	yosys ./Autosyn.ys

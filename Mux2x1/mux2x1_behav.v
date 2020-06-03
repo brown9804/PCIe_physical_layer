@@ -1,5 +1,4 @@
 `timescale 1ns / 1ps
-`include "selector.v"
 
 //////////////////////////////////////////////////////////////////////////////////
 // Company: U.C.R EIE
@@ -32,18 +31,15 @@ module mux2x1_behav(                 		// starts behavorial module
 	output reg [7:0] out,					// data out
 	output reg validout
  );
-    
+    reg selector;
 
-	//AUXILIARY
-	wire selector;		
-	
-	// automatic selector
-    selector sel(
-			.clk(clk),
-			.reset(reset),
-			.sel(selector)
-	);
-
+	always @(posedge clk) begin					// triggered at clk or by pressing the reset button
+    if (~reset) begin
+            selector <= 0;
+		end else begin
+			selector <= ~selector;				// make toggle at posedge clock
+		end
+	end  // posedge clock
 
 
 	// SEQUENTIAL LOGIC START - INSTANT SPREAD

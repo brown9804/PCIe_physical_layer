@@ -83,7 +83,7 @@ reg test;
 always@(posedge clk) begin
     if(out != outs)
     begin
-       $display ("ERROR behavioral file and structural file are not the same");
+      // $display ("ERROR behavioral file and structural file are not the same");
        test <= 0;
      end // end display
 
