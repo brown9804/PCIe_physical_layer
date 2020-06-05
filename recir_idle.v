@@ -3,173 +3,73 @@
 // timna.brown@ucr.ac.cr
 
 // Recirculation block if not IDLE
-
-// After an exhaustive search for information, the behavior of the
-// idle_stand recirculation block is analyzed, which if we make a finite
-// tester machine (FSM), such as a semaphore, the status of two reqs
-// is expected. A input from serial parallel where it is contemplated that
-// if the reset is active, the tester to be implemented is assigned
-// (by means of a non-blocking assignment), the idle_stand which is known
-// as a standard signal. If you consider four outputs for the ff 8buts + 1 valid block
-
 module recir_idle (
   input  clk,
   input reset,
-  // Serial Parallel
-  input wire sp,
-  // For ff 8buts + 1 valid
-  output reg ff0,
-  output reg ff1,
-  output reg ff2,
-  output reg ff3
+  // Serial Parallel input
+  input wire active,
+  // Inputs
+  input wire [7:0] in0,
+  input wire [7:0] in1,
+  input wire [7:0] in2,
+  input wire [7:0] in3,
+  input wire [3:0] valid_in,
+  // For ff 8buts + 1 valid for mux
+  output reg [7:0] out0m,
+  output reg [7:0] out1m,
+  output reg [7:0] out2m,
+  output reg [7:0] out3m,
+  output reg [3:0] valid_outm,
+  // For ff 8buts + 1 valid for tester
+  output reg [7:0] out0t,
+  output reg [7:0] out1t,
+  output reg [7:0] out2t,
+  output reg [7:0] out3t,
+  output reg [3:0] valid_outt
   );
 
- reg [7:0] recirblock;
- reg [7:0] go;
-
  // Assign standar singnals
- idle_stand = 8'b001
- ff0_stand = 8'b010
- ff1_stand = 8'b011
- ff2_stand = 8'b100
- ff3_stand = 8'b101  
+ // Input idle
+ idle_stand = 1;
+ // Conecctions
+ wire [7:0] out_c0, out_c1, out_c2, out_c3;
 
-always @ (recirblock or sp)
- begin
-    go = 8'b000;
+ reg [3:0] validoutm, validoutt;
 
-    case(recirblock)
-      idle_stand: begin
-          if (sp == 1)
-            begin
-              go = ff0_stand;
-            end // end if
-
-          else begin
-             go = idle_stand;
-           end // end else
-        end // end case idle_stand
-
-      ff0_stand: begin
-        if (sp == 1)
-          begin
-            go = ff0_stand;
-          end // end if
-
-        else begin
-            go = idle_stand;
-        end // end else
-       end // end ff0_stand
-
-       ff1_stand: begin
-        if (sp == 1)
-          begin
-            go = ff1_stand;
-          end // end if
-
-          else begin
-            go = idle_stand;
-          end // end else
-        end // end ff1_stand
-
-        ff2_stand: begin
-          if (sp == 1)
-            begin
-              go = ff2_stand;
-            end // end if
-
-          else begin
-              go = idle_stand;
-          end // end else
-         end // end ff2_stand
-
-         ff3_stand: begin
-          if (sp == 1)
-            begin
-              go = ff3_stand;
-            end // end if
-
-            else begin
-              go = idle_stand;
-            end // end else
-          end // end ff3_stand
-
-      // Because we use case we need a default case
-      default: begin
-        go = idle_stand;
-      end // end default
-    endcase
-  end // end always @ (recirblock or sp) block
-
-always @ (posedge clock)
-  begin
-    if (reset == 1)
-      begin
-        recirblock <=  #1 idle_stand;
+ always @(posedge clk4f) begin
+      out_c0 <= in0;
+      out_c1 <= in1;
+      out_c2 <= in2;
+      out_c3 <= in3;
+      if (active) begin
+        out0m <= out_c0;
+        out1m <= out_c1;
+        out2m <= out_c2;
+        out3m <= out_c3;
+        out0t <= 0;
+        out1t <= 0;
+        out2t <= 0;
+        out3t <= 0;
+        validoutm <= valid_in;
       end // end if
-
-      else begin
-        recirblock <=  #1  go;
+    else begin // active  == 0
+        out0t <= out_c0;
+        out1t <= out_c1;
+        out2t <= out_c2;
+        out3t <= out_c3;
+        out0m <= 0;
+        out1m <= 0;
+        out2m <= 0;
+        out3m <= 0;
+        validoutt <= valid_in;
       end // end else
-  end // end always @ (posedge clock)
 
-always @ (posedge clock)
-  begin
-    if (reset == 1)
-    begin
-      ff0 <=  #1  0;
-      ff1 <=  #1  0;
-      ff2 <=  #1  0;
-      ff3 <=  #1  0;
-    end // end if
-
-    else begin
-    case(recirblock)
-      idle_stand: begin
-          ff0 <=  #1  0;
-          ff1 <=  #1  0;
-          ff2 <=  #1  0;
-          ff3 <=  #1  0;
-      end // end case idle
-
-      ff0_stand : begin
-          ff0 <=  #1  1;
-          ff1 <=  #1  0;
-          ff2 <=  #1  0;
-          ff3 <=  #1  0;
-      end // end case ff0
-
-      ff1_stand : begin
-          ff0 <=  #1  0;
-          ff1 <=  #1  1;
-          ff2 <=  #1  0;
-          ff3 <=  #1  0;
-      end // end case gnt1
-
-      ff2_stand : begin
-          ff0 <=  #1  0;
-          ff1 <=  #1  0;
-          ff2 <=  #1  1;
-          ff3 <=  #1  0;
-      end // end case gnt1
-
-      ff3_stand : begin
-          ff0 <=  #1  0;
-          ff1 <=  #1  0;
-          ff2 <=  #1  0;
-          ff3 <=  #1  1;
-      end // end case gnt1
+ end // always posedge 4f
 
 
-    // Same as upsters, if we use case we need a default statemnet
-    default : begin
-       ff0 <= #1 0;
-       ff1 <= #1 0;
-       ff2 <= #1 0;
-       ff3 <= #1 0;
-    end // end default
-    endcase // else case(recirblock)
-  end // end reset == 0
- end // always  @ (posedge clock)
+always(*) begin
+  valid_outt = validoutt;
+  valid_outm = validoutm;
+end // end always *
 
 endmodule
