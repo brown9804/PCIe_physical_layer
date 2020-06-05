@@ -146,7 +146,7 @@ input wire outs,
 
 
 	// Initial Values
-	initial in			= 7'b0;	
+	initial in			= 1'b0;	
 	initial reset 		= 0;
 
 	// clock logic

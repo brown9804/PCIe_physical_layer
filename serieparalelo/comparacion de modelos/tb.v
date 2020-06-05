@@ -1,5 +1,6 @@
 `include "tester.v"
 `include "serieparalelo.v"
+`include "cmos_cells.v" 
 
 module bancoPruebas();
     wire in;
@@ -12,7 +13,7 @@ module bancoPruebas();
 
 tester Probador(
                     .out(out),
- 		    .outs(outs),
+ 		            .outs(outs),
                     .in(in),
                     .clk4f(clk4f),
                     .clk32f(clk32f),

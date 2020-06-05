@@ -22,8 +22,7 @@ run:
 	gtkwave muxy.vcd
 	echo listo!
 sed:
-	sed -e ' s/serieparalelo/serieparalelo_struct/' ./serieparalelo_struct_syn.v >> serieparalelomux4x1_struct.v
-	sed -i '2i `include "cmos_cells.v" ' serieparalelo.v
+	sed -e ' s/serieparalelo/serieparalelo_struct/' ./serieparalelo_struct_syn.v >> serieparalelo_struct.v
 	rm -f serieparalelo_struct_syn.v
 autosyn: 
 	yosys ./Autosyn.ys

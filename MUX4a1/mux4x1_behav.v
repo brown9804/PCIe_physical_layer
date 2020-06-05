@@ -52,49 +52,13 @@ module mux4x1_behav(                		// starts behavorial module
 	wire v_out;
 	wire valid_final;
 
-
-// ConectioN IN L1 FF for data
-ff4in4o ff4(				.in0(in0),
+mux4x2_behav mux_A(					.in0(in0),			//entrando valids y data sinronizados
 							.in1(in1),
 							.in2(in2),
 							.in3(in3),
 							.out0(n0),
 							.out1(n1),
-							.out2(n2),
-							.out3(n3),
-							.clkf(clk1f),
-							.reset(reset)
-
-); 
-
-ff4in4ovalid ffvalid42(		.in0(valid[0]),		// sincronizando valids
-							.in1(valid[1]),
-							.in2(valid[2]),
-							.in3(valid[3]),
-							.out0(valid_n[0]),
-							.out1(valid_n[1]),
-							.out2(valid_n[2]),
-							.out3(valid_n[3]),
-							.clkf(clk1f),
-							.reset(reset)	
-
-
-
-); 
-
-
-
-
-
-
-
-mux4x2_behav mux_A(			.in0(n0),			//entrando valids y data sinronizados
-							.in1(n1),
-							.in2(n2),
-							.in3(n3),
-							.out0(n4),
-							.out1(n5),
-							.valid(valid_n),
+							.valid(valid),
 							.clk(clk2f),
 							.reset(reset),
 							.validout(valid_out)
@@ -102,16 +66,16 @@ mux4x2_behav mux_A(			.in0(n0),			//entrando valids y data sinronizados
 ); 
  
 
-ff2in2o ff42(				.in0(n4),
-							.in1(n5),
-							.out0(n6),
-							.out1(n7),
-							.clkf(clk2f),
+ff2in2o ff42(						.in0(n0),
+							.in1(n1),
+							.out0(n2),
+							.out1(n3),
+							.clkf(clk4f),
 							.reset(reset)
 ); 
 
 
-ff4in4ovalid ffvalid21(		.in0(valid_out[0]),		// sincronizando valids, solo se usan 2/4 entradas
+ff4in4ovalid ffvalid21(					.in0(valid_out[0]),		// sincronizando valids, solo se usan 2/4 entradas
 							.in1(valid_out[1]),
 							.out0(valid_21[0]),
 							.out1(valid_21[1]),
@@ -125,38 +89,35 @@ ff4in4ovalid ffvalid21(		.in0(valid_out[0]),		// sincronizando valids, solo se u
 
 
 mux2x1_behav  mux_B(				
-								.in0(n6),
-                        		.in1(n7),
-								.out(w),
+								.out(n4),
 								.valid(valid_21),	
 								.reset(reset),
+								.in0(n2),
+                        					.in1(n3),
 								.clk(clk4f),
 								.validout(v_out)
 );
 
 
 
-ff1in1o ff21(					.in(w),		// sincronizando data final
-								.out(wout),
-								.clkf(clk4f),
-								.reset(reset)
-);
 
 
-ff4in4ovalid ffvalidfinal(	
-							.in0(v_out),		// sincronizando valids, solo se usa 1/4 entradas
-							.out0(valid_final),
-							.clkf(clk4f),
-							.reset(reset)	
-);
+	// spreading final signal
+	always @(posedge clk4f)
+		begin
+		if (reset == 0) // If reset in LOW nonblobking assing zero
+		begin
+		out <= 0;
+		validout <= 0;		
+		end 
+		else begin // reset == 1
+		out <= n4;
+		validout = v_out;
+		end 
+	end 
 
 
 
-//spreading final signal
 
-always @ (*) begin
-	out =	wout;
-	validout = valid_final;
-end
 
 endmodule                               // Mux4x1 behav

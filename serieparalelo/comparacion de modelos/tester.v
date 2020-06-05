@@ -19,7 +19,7 @@
 
 module tester(
     input wire [7:0] out,           // salida paralela de bus de 8 bits + valid
-input wire [7:0] outs,  
+    input wire [7:0] outs,  
     input wire valid,               // + valid
     output reg in,                  // entrada bit a bit serial
     output reg reset,               // reset
@@ -39,15 +39,17 @@ input wire [7:0] outs,
 		$dumpfile("muxy.vcd");																						// "dump" file
 	$dumpvars;
 	
-        // reset 
-        repeat(2) begin
+      repeat (6) begin
+		@(posedge clk32f);	
+		reset = 0;
+		end		
+
+		repeat (6) begin																							// Repeat the test 3 times
+		@(posedge clk32f);																								// sync with clock																			 	
+		reset = 1;
+		end
+
         @(posedge clk32f);
-        end
-        @(posedge clk32f);
-        reset = 1;                                
-        repeat(2) begin
-        @(posedge clk32f);
-        end
 
         // pruebas 
 
@@ -57,7 +59,7 @@ input wire [7:0] outs,
         end
 
 
-        repeat(4) begin         // BC = 10 1111 00        
+        repeat(5) begin         // BC = 10 1111 00        
         @(posedge clk32f);
         in  <=  1;
         @(posedge clk32f);
@@ -76,13 +78,48 @@ input wire [7:0] outs,
         in  <=  0;
         end
         
-        // EN ESTE PUNTO SE TIENEN 4 BC > ACTIVE = 1 Y SE RECIBE UNA PALABRA valida
-        repeat(15) begin         // 10101010 -> AA 
+        // EN ESTE PUNTO SE TIENEN 5 BC > ACTIVE = 1 Y SE RECIBE UNA PALABRA valida
+        
+             // Nueva palabra a enviar  -> FF -> 11111111
         @(posedge clk32f);
-        in  <=  ~in;
-        end
+        in  <=  1;
+        @(posedge clk32f);
+        in  <=  1;
+        @(posedge clk32f);
+        in  <=  1;
+        @(posedge clk32f);
+        in  <=  1;
+        @(posedge clk32f);
+        in  <=  1;
+        @(posedge clk32f);
+        in  <=  1;
+        @(posedge clk32f);
+        in  <=  1;
+        @(posedge clk32f);
+        in  <=  1;
 
-        // Nueva palabra a enviar  -> EE -> 11101110
+        // nueva palabra DD 11011101
+        
+         @(posedge clk32f);
+        in  <=  1;
+        @(posedge clk32f);
+        in  <=  1;
+        @(posedge clk32f);
+        in  <=  0;
+        @(posedge clk32f);
+        in  <=  1;
+        @(posedge clk32f);
+        in  <=  1;
+        @(posedge clk32f);
+        in  <=  1;
+        @(posedge clk32f);
+        in  <=  0;
+        @(posedge clk32f);
+        in  <=  1;
+
+
+
+         // Nueva palabra a enviar  -> EE -> 11101110
       @(posedge clk32f);
         in  <=  1;
         @(posedge clk32f);
@@ -99,9 +136,31 @@ input wire [7:0] outs,
         in  <=  1;
         @(posedge clk32f);
         in  <=  0;
+        
+        // nueva palabra CC ->  11001100
+        @(posedge clk32f);
+        in  <=  1;
+        @(posedge clk32f);
+        in  <=  1;
+        @(posedge clk32f);
+        in  <=  0;
+        @(posedge clk32f);
+        in  <=  0;
+        @(posedge clk32f);
+        in  <=  1;
+        @(posedge clk32f);
+        in  <=  1;
+        @(posedge clk32f);
+        in  <=  0;
+        @(posedge clk32f);
+        in  <=  0;
 
+        // NUEVA PALABRA BB -> 10111011 
 
-            // Nueva palabra a enviar  -> FF -> 11111111
+        @(posedge clk32f);
+        in  <=  1;
+        @(posedge clk32f);
+        in  <=  0;
         @(posedge clk32f);
         in  <=  1;
         @(posedge clk32f);
@@ -109,29 +168,83 @@ input wire [7:0] outs,
         @(posedge clk32f);
         in  <=  1;
         @(posedge clk32f);
-        in  <=  1;
-        @(posedge clk32f);
-        in  <=  1;
-        @(posedge clk32f);
-        in  <=  1;
+        in  <=  0;
         @(posedge clk32f);
         in  <=  1;
         @(posedge clk32f);
         in  <=  1;
 
+        // NUEVA PALABRA 99 -> 10011001
+        @(posedge clk32f);
+        in  <=  1;
+        @(posedge clk32f);
+        in  <=  0;
+        @(posedge clk32f);
+        in  <=  0;
+        @(posedge clk32f);
+        in  <=  1;
+        @(posedge clk32f);
+        in  <=  1;
+        @(posedge clk32f);
+        in  <=  0;
+        @(posedge clk32f);
+        in  <=  0;
+        @(posedge clk32f);
+        in  <=  1;
 
+        // NUEVA PALABRA 10101010 -> AA 
+            
+@(posedge clk32f);
+        in  <=  1;
+        @(posedge clk32f);
+        in  <=  0;
+        @(posedge clk32f);
+        in  <=  1;
+        @(posedge clk32f);
+        in  <=  0;
+        @(posedge clk32f);
+        in  <=  1;
+        @(posedge clk32f);
+        in  <=  0;
+        @(posedge clk32f);
+        in  <=  1;
+        @(posedge clk32f);
+        in  <=  0;
+
+        // Nueva palabra a enviar  -88 -> 10001000
+      @(posedge clk32f);
+        in  <=  1;
+        @(posedge clk32f);
+        in  <=  0;
+        @(posedge clk32f);
+        in  <=  0;
+        @(posedge clk32f);
+        in  <=  0;
+        @(posedge clk32f);
+        in  <=  1;
+        @(posedge clk32f);
+        in  <=  0;
+        @(posedge clk32f);
+        in  <=  0;
+        @(posedge clk32f);
+        in  <=  0;
+
+         repeat(8) begin         
+        @(posedge clk32f);
+         end
+       
 
         $finish;
     end
 
 
 	// Initial Values
-	initial in			= 7'b0;	
+	initial in			= 0;	
 	initial reset 		= 0;
 
 	// clock logic
 	initial	clk	 	    = 0;			// Initial value to avoid indeterminations
-	always	#1 clk	    = ~clk;		// toggle every 1ns
+	always	#5 clk	    = ~clk;		// toggle every 1ns
 
 	// clks 
 

@@ -37,16 +37,16 @@ wire clk4f;
 //wire clk32f;		// faster
 wire clk;			// root clock
 wire [3:0] valid;					
-wire [7:0] out;
+wire [7:0] outc;
 wire [7:0] outs;
 
 
 // conexiones e instanciado
 
 mux4x1_behav	 	mux_behav(		                       
-						.out(out),
+						.out(outc),
 						.in0(in0),
-                        .in1(in1),
+                       				.in1(in1),
 						.in2(in2),
 						.in3(in3),
 						.valid(valid),
@@ -60,7 +60,7 @@ mux4x1_behav	 	mux_behav(
 mux4x1_struct	 	mux_struct(		                       
 						.out(outs),
 						.in0(in0),
-                        .in1(in1),
+                        			.in1(in1),
 						.in2(in2),
 						.in3(in3),
 						.valid(valid),
@@ -74,10 +74,10 @@ mux4x1_struct	 	mux_struct(
 
 
 
-tester Tb(       		.outc(out),
+tester Tb(       				.outc(outc),
 						.outs(outs),
 						.in0(in0),
-                        .in1(in1),
+                        			.in1(in1),
 						.in2(in2),
 						.in3(in3),
 						.valid(valid),
