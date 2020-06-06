@@ -36,7 +36,8 @@ wire reset, clk1f, clk2f, clk4f, clk32f;
 wire [7:0] in0_TB, in1_TB, in2_TB, in3_TB;
 wire [7:0] out0_BTB, out1_BTB, out2_BTB, out3_BTB, out_rx_txBTB;
 wire [7:0] out0_STB, out1_STB, out2_STB, out3_STB, out_rx_txSTB;
-wire [3:0] validout_TB;
+wire [3:0] validout_STB;
+wire [3:0] validout_BTB;
 wire [3:0] validin_TB;
 wire [7:0] out0_recir;
 wire [7:0] out1_recir;
@@ -65,7 +66,7 @@ phy phy_tb(/*AUTOINST*/
   .out1 (out1_BTB),
   .out2 (out2_BTB),
   .out3 (out3_BTB),
-  .validout (validout_TB),
+  .validout (validout_BTB),
   // Inputs
   .clk1f (clk1f),
   .clk2f (clk2f),
@@ -97,7 +98,7 @@ phy_syn phy_syn_tb(/*AUTOINST*/
   .out1 (out1_STB),
   .out2 (out2_STB),
   .out3 (out3_STB),
-  .validout (validout_TB),
+  .validout (validout_STB),
   // Inputs
   .clk1f (clk1f),
   .clk2f (clk2f),
@@ -133,13 +134,12 @@ t_phy t_phy_tb(/*AUTOINST*/
   .out1 (out1_BTB),
   .out2 (out2_BTB),
   .out3 (out3_BTB),
-
+  .validout (validout_BTB),
   .out0_s (out0_STB),
   .out1_s (out1_STB),
   .out2_s (out2_STB),
   .out3_s (out3_STB),
-  
-  .validout (validout_TB),
+  .validout_s (validout_STB),
   // Inputs
   .clk1f (clk1f),
   .clk2f (clk2f),
