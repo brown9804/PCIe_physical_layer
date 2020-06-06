@@ -1,9 +1,9 @@
 `timescale 	1ns/1ps
 
-`include "paralelltoserial_IDLE.v"
-`include "tester.v"
-`include "paralelltoserial_IDLE_struct.v"
-`include "cmos_cells.v"
+`include "./src/paralelltoserial_IDLE.v"
+`include "./testers/t_ptos_idle.v"
+`include "./syn/paralelltoserial_IDLE_syn.v"
+`include "./lib/cmos_cells.v"
 
 module testbench_ptos_idle;
 
