@@ -4,6 +4,8 @@
 
 //            FLIP FlOP 2 inputs and 2 outputs
 // Its for 8 bits plus valid
+`ifndef FF2IN20
+`define FF2IN20
 
   module ff2in2o(
       input wire clkf,
@@ -32,3 +34,9 @@
   end // end always posedge clk
 
 endmodule
+
+
+  // Local Variables:
+  // verilog-library-directories:("."):
+  // End:
+  `endif
