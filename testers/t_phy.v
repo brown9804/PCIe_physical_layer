@@ -6,6 +6,18 @@
 `define T_PHY
 
 module t_phy(
+// outputs for recirc module
+  input wire [7:0] out0_recir,
+  input wire [7:0] out1_recir,
+  input wire [7:0] out2_recir,
+  input wire [7:0] out3_recir,
+  input wire [7:0] valid_out_recir,
+// outputs for recirc module
+  input wire [7:0] out0_recir_s,
+  input wire [7:0] out1_recir_s,
+  input wire [7:0] out2_recir_s,
+  input wire [7:0] out3_recir_s,
+  input wire [7:0] valid_out_recir_s,
   input wire [7:0] out0,
   input wire [7:0] out1,
   input wire [7:0] out2,
@@ -95,6 +107,21 @@ module t_phy(
 
       // Begin Tests
 
+
+      repeat(5) begin         // BC = 10 1111 00
+      @(posedge clk1f);
+      in0  <=  8'hBC;
+      in1  <=  8'hBC;
+      in2  <=  8'hBC;
+      in3  <=  8'hBC;
+      @(posedge clk1f);
+      in0  <=  8'hBC;
+      in1  <=  8'hBC;
+      in2  <=  8'hBC;
+      in3  <=  8'hBC;
+      end
+
+
       repeat (6) begin																							// Repeat the test 3 times
   		@(posedge clk1f);																								// sync with clock
   		#4 reset = 1;
@@ -119,12 +146,12 @@ module t_phy(
 
   		@(posedge clk1f);
   		in2 <= 8'h77;
-  		validin <= 4'b1111;
+  		validin <= 4'b1;
 
 
   		repeat (5) begin
   		@(posedge clk1f);				// testing static ins
-      validin <= 4'b1111;
+      validin <= 4'b1;
   		end
 
       #40 $finish;
