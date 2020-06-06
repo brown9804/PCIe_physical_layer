@@ -1,25 +1,25 @@
 //////////////////////////////////////////////////////////////////////////////////
 // Company: U.C.R, EIE
 // Engineer: Brandon Esquivel Molina
-//
+// 
 // Create Date: 26.05.2020
-// Design Name: Serial to parallel TESTER
+// Design Name: Serial to parallel Module 
 // Project Name: PHY Layer PCIe
 // Target Devices: PCIe
 // Tool Versions: Yosys 0.9 Iverolg release at 2020
 // Description: tester for Serial to parallel module
-// Dependencies:
-//
+// Dependencies: 
+// 
 // Revision: 1.0  All good
 // Revision 0.01 - File Created
-// Additional Comments:
-//
+// Additional Comments: revision struct and behav
+// 
 //////////////////////////////////////////////////////////////////////////////////
 
 
 module tester(
-    input wire [7:0] out,           // salida paralela de bus de 8 bits + valid
-    input wire [7:0] outs,
+    input wire [7:0] outc,           // salida paralela de bus de 8 bits + valid
+    input wire [7:0] outs,  
     input wire valid,               // + valid
     output reg in,                  // entrada bit a bit serial
     output reg reset,               // reset
@@ -27,31 +27,31 @@ module tester(
     output reg clk4f                // frecuencia de envio
 
 );
-
+    
     // AUXILIARES
     reg clk16f;
     reg clk8f;
     reg clk2f;
     reg clk1f;
     reg clk;
-
+    
     initial begin
-		$dumpfile("stop.vcd");																						// "dump" file
+		$dumpfile("muxy.vcd");																						// "dump" file
 	$dumpvars;
-
+	
       repeat (6) begin
-		@(posedge clk32f);
+		@(posedge clk32f);	
 		reset = 0;
-		end
+		end		
 
 		repeat (6) begin																							// Repeat the test 3 times
-		@(posedge clk32f);																								// sync with clock
+		@(posedge clk32f);																								// sync with clock																			 	
 		reset = 1;
 		end
 
         @(posedge clk32f);
 
-        // pruebas
+        // pruebas 
 
         repeat(3) begin         // 01010101  -> NO HAY ACTIVE YA QUE BC < 4
         @(posedge clk32f);
@@ -59,7 +59,7 @@ module tester(
         end
 
 
-        repeat(5) begin         // BC = 10 1111 00
+        repeat(5) begin         // BC = 10 1111 00        
         @(posedge clk32f);
         in  <=  1;
         @(posedge clk32f);
@@ -77,9 +77,9 @@ module tester(
         @(posedge clk32f);
         in  <=  0;
         end
-
+        
         // EN ESTE PUNTO SE TIENEN 5 BC > ACTIVE = 1 Y SE RECIBE UNA PALABRA valida
-
+        
              // Nueva palabra a enviar  -> FF -> 11111111
         @(posedge clk32f);
         in  <=  1;
@@ -99,7 +99,7 @@ module tester(
         in  <=  1;
 
         // nueva palabra DD 11011101
-
+        
          @(posedge clk32f);
         in  <=  1;
         @(posedge clk32f);
@@ -136,7 +136,7 @@ module tester(
         in  <=  1;
         @(posedge clk32f);
         in  <=  0;
-
+        
         // nueva palabra CC ->  11001100
         @(posedge clk32f);
         in  <=  1;
@@ -155,7 +155,7 @@ module tester(
         @(posedge clk32f);
         in  <=  0;
 
-        // NUEVA PALABRA BB -> 10111011
+        // NUEVA PALABRA BB -> 10111011 
 
         @(posedge clk32f);
         in  <=  1;
@@ -192,8 +192,8 @@ module tester(
         @(posedge clk32f);
         in  <=  1;
 
-        // NUEVA PALABRA 10101010 -> AA
-
+        // NUEVA PALABRA 10101010 -> AA 
+            
 @(posedge clk32f);
         in  <=  1;
         @(posedge clk32f);
@@ -229,24 +229,24 @@ module tester(
         @(posedge clk32f);
         in  <=  0;
 
-         repeat(8) begin
+         repeat(8) begin         
         @(posedge clk32f);
          end
-
+       
 
         $finish;
     end
 
 
 	// Initial Values
-	initial in			= 0;
+	initial in			= 0;	
 	initial reset 		= 0;
 
 	// clock logic
 	initial	clk	 	    = 0;			// Initial value to avoid indeterminations
 	always	#5 clk	    = ~clk;		// toggle every 1ns
 
-	// clks
+	// clks 
 
 	initial clk32f <= 0;
     initial clk16f <= 0;
@@ -255,20 +255,19 @@ module tester(
     initial clk2f <= 0;
     initial clk1f <= 0;
 
-
+	
 
 	// checker
 reg test;
 
 always@(posedge clk) begin
-    if(out != outs)
+    if(outc != outs)
     begin
-       $display ("ERROR behavioral file and structural file are not the same");
-       test <= 1;
+       test <= 0;
      end // end display
 
      else begin
-        test <= 0;
+        test <= 1;
       end //else
 end // always checker
 
@@ -277,7 +276,7 @@ end // always checker
     // Faster frequency
     always @(posedge clk) begin
 		clk32f <= ~clk32f; // if was LOW change to HIGH
-        end
+        end 
     //////////////////////////////
     // For 16 Hz
     always @(posedge clk32f) begin
