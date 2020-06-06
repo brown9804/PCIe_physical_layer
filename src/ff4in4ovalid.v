@@ -2,6 +2,8 @@
 
 //            FLIP FlOP 4 inputs and 4 outputs
 // Its for 1 bit
+`ifndef FF4IN40VALID
+`define FF4IN40VALID
 
   module ff4in4ovalid(
       input wire clk,
@@ -38,3 +40,9 @@
   end // end always posedge clk
 
 endmodule
+
+
+// Local Variables:
+// verilog-library-directories:("."):
+// End:
+`endif

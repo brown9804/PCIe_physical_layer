@@ -2,20 +2,18 @@
 // Mayo, 2020
 // timna.brown@ucr.ac.cr
 
-//            FLIP FlOP 2 inputs and 2 outputs
+//       FLIP FlOP 1 inputs and 1 outputs
 // Its for 8 bits plus valid
-`ifndef FF2IN20
-`define FF2IN20
 
-  module ff2in2o(
+`ifndef FF1IN10
+`define FF1IN10
+
+
+  module ff1in1o(
       input wire clk,
       input wire reset,
-      // Inputs, are 2
-      input wire [7:0] in0,
-      input wire [7:0] in1,
-      // Outputs, are 2
-      output reg [7:0] out0,
-      output reg [7:0] out1
+      input wire [7:0] in,
+      output reg [7:0] out
   );
   // Each positive edge of the clock make these changes
   always @(posedge clk)
@@ -24,19 +22,17 @@
     // Reset synchronous
     if (reset == 0) // If reset in LOW nonblobking assing zero
     begin
-      out0 <= 0;
-      out1 <= 0;
+      out <= 0;
     end // end if
     else begin // reset  == 1
-      out0 <= in0;
-      out1 <= in1;
+      out <= in;
     end // end else
   end // end always posedge clk
 
 endmodule
 
 
-  // Local Variables:
-  // verilog-library-directories:("."):
-  // End:
-  `endif
+// Local Variables:
+// verilog-library-directories:("."):
+// End:
+`endif
