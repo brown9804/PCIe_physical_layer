@@ -26,14 +26,16 @@ module phy_tx_b (
     input wire [7:0] in2,
     input wire [7:0] in3,
     input wire in_rx_tx,            // active/valid from Rx
-    // Valid for inputs
     input wire [3:0] validmux41,
+    // Valid for inputs
+ 
 
     // outputs for recirc module
         output reg [7:0] out0_recir,
         output reg [7:0] out1_recir,
         output reg [7:0] out2_recir,
         output reg [7:0] out3_recir,
+        output reg [7:0] valid_out_recir,
 
     // One output of paralle-serial
     output reg out_b
@@ -41,11 +43,12 @@ module phy_tx_b (
 
     wire [3:0] valid_in;
     wire [7:0] mux41_to_parserno;   // Wire for connect between mux41 and the parallel-serial
+    wire [3:0] validmux41_in;       // to pass the valid from recirc to mux
     wire out_conec;
     wire active_inter;
     // valid of seral parallel
     wire validparserno;
-
+    wire [3:0] wvalid_out_recir;
     // wire inside block for outputs
     wire [7:0] o0, o1, o2, o3;
     wire [7:0] ot0,ot1, ot2, ot3;
@@ -57,13 +60,13 @@ module phy_tx_b (
       .out1m (o1[7:0]),
       .out2m (o2[7:0]),
       .out3m (o3[7:0]),
-      .valid_outm (validmux41[3:0]),
+      .valid_outm (validmux41_in),
       // For ff 8buts + 1 valid for tester
       .out0t (ot0[7:0]),
       .out1t (ot1[7:0]),
       .out2t (ot2[7:0]),
       .out3t (ot3[7:0]),
-      .valid_outt (validmux41[3:0]),
+      .valid_outt (wvalid_out_recir),
       // Inputs
       .clk1f (clk1f),
       .clk2f (clk2f),
@@ -76,11 +79,11 @@ module phy_tx_b (
       .in1 (in1[7:0]),
       .in2 (in2[7:0]),
       .in3 (in3[7:0]),
-      .valid_in (validmux41[3:0])
+      .valid_in (validmux41)
       );
 
       // Serial parallel idle
-      serieparaleloIDL spidle(
+      serieparalelo_IDLE spidle(
           // OUTPUTS
           .valido  (active_inter),
           // Inputs
@@ -94,7 +97,7 @@ module phy_tx_b (
       mux4x1_behav mux41_phy_tx(/*AUTOINST*/
           .out     (mux41_to_parserno[7:0]),
           .validout(validparserno),
-          .valid    (validmux41[3:0]),
+          .valid    (validmux41_in),
           .clk1f (clk1f),
           .clk2f (clk2f),
           .clk4f (clk4f),
@@ -110,7 +113,7 @@ module phy_tx_b (
           paralelo_a_serial parserno_tx(/*AUTOINST*/
               .out     (out_conec),
               .in     (mux41_to_parserno[7:0]),
-              .in_valid     (validparserno),                //**************
+              .in_valid     (validparserno),               
               .reset        (reset),
               .clk32f      (clk32f)
           );
@@ -123,6 +126,7 @@ module phy_tx_b (
         out1_recir = ot1;
         out2_recir = ot2;
         out3_recir = ot3;
+        valid_out_recir = wvalid_out_recir;
     end
 
 endmodule

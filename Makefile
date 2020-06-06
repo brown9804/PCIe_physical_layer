@@ -339,7 +339,7 @@ ystopidle:
 	yosys $(YOSYS)$(_Y_STOPIDLE)
 
 rstopidle:
-	sed -i 's/serieparaleloIDL/serieparaleloIDL_syn/' $(SYN)$(_SSTOPIDLE)
+	sed -i 's/serieparalelo_IDLE/serieparalelo_IDLE_syn/' $(SYN)$(_SSTOPIDLE)
 
 vstopidle:
 	iverilog -o $(OVVP)$(_VVP_STOPIDLE) $(TESTBENCHES)$(_TB_STOPIDLE)
@@ -452,7 +452,7 @@ rtx:
 	sed -i 's/ff1in1o/ff1in1o_syn/g; s/ff2in2o/ff2in2o_syn/g; s/ff4in4o/ff4in4o_syn/g' $(SYN)$(_SPHY_TX)
 	sed -i 's/mux2x1_behav/mux2x1_behav_syn/g; s/mux4x1_behav/mux4x1_behav_syn/g; s/mux4x2_behav/mux4x2_behav_syn/g' $(SYN)$(_SPHY_TX)
 	sed -i 's/paralelo_a_serial/paralelo_a_serial_syn/g; s/phy_tx_b/phy_tx_b_syn/g' $(SYN)$(_SPHY_TX)
-	sed -i 's/serieparaleloIDL/serieparaleloIDL_syn/g; s/recir_idle/recir_idle_syn/g' $(SYN)$(_SPHY_TX)
+	sed -i 's/serieparalelo_IDLE/serieparalelo_IDLE_syn/g; s/recir_idle/recir_idle_syn/g' $(SYN)$(_SPHY_TX)
 vtx:
 	iverilog -o $(OVVP)$(_VVP_PHY_TX) $(TESTBENCHES)$(_TB_PHY_TX)
 	vvp $(OVVP)$(_VVP_PHY_TX) > $(LOG_TXT)$(_VVP_PHY_TX)_log.txt
@@ -500,7 +500,7 @@ rphy:
 	sed -i 's/ff1in1o/ff1in1o_syn/g; s/ff2in2o/ff2in2o_syn/g; s/ff4in4o/ff4in4o_syn/g' $(SYN)$(_SPHY)
 	sed -i 's/mux2x1_behav/mux2x1_behav_syn/g; s/mux4x1_behav/mux4x1_behav_syn/g; s/mux4x2_behav/mux4x2_behav_syn/g' $(SYN)$(_SPHY)
 	sed -i 's/paralelo_a_serial/paralelo_a_serial_syn/g; s/phy_tx_b/phy_tx_b_syn/g' $(SYN)$(_SPHY)
-	sed -i 's/serieparaleloIDL/serieparaleloIDL_syn/g; s/recir_idle/recir_idle_syn/g' $(SYN)$(_SPHY)
+	sed -i 's/serieparalelo_IDLE/serieparalelo_IDLE_syn/g; s/recir_idle/recir_idle_syn/g' $(SYN)$(_SPHY)
 	sed -i 's/demux1x2_behav/demux1x2_behav_syn/g; s/demux1x4_behav/demux1x4_behav_syn/g; s/demux2x4_behav/demux2x4_behav_syn/g' $(SYN)$(_SPHY)
 	sed -i 's/paralelo_a_serial_IDLE/paralelo_a_serial_IDLE_syn/g; s/serieparalelo/serieparalelo_syn/g; s/phy_rx/phy_rx_syn/g' $(SYN)$(_SPHY)
 	sed -i 's/phy/phy_syn/g' $(SYN)$(_SPHY)

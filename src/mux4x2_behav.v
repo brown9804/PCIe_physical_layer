@@ -18,7 +18,7 @@
 // Additional Comments: A conversion of MUX2X1 4bits
 // 
 //////////////////////////////////////////////////////////////////////////////////
-`include "mux2x1_behav.v"
+`include "./src/mux2x1_behav.v"
 
 module mux4x2_behav(                	 // starts behavorial module
     
