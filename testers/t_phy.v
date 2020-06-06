@@ -27,6 +27,7 @@ module t_phy(
   input wire [7:0] out2_s,
   input wire [7:0] out3_s,
   input wire [3:0] validout,
+  input wire [3:0] validout_s,
 
   output reg clk1f,
   output reg  clk2f,
@@ -101,7 +102,7 @@ module t_phy(
 
     repeat (6) begin
    		@(posedge clk32f);
-   		reset = 0;
+   		reset <= 0;
       validin <= 4'b0;
    		end
 
@@ -109,12 +110,12 @@ module t_phy(
 
 
       repeat(5) begin         // BC = 10 1111 00
-      @(posedge clk1f);
+      @(posedge clk4f);
       in0  <=  8'hBC;
       in1  <=  8'hBC;
       in2  <=  8'hBC;
       in3  <=  8'hBC;
-      @(posedge clk1f);
+      @(posedge clk4f);
       in0  <=  8'hBC;
       in1  <=  8'hBC;
       in2  <=  8'hBC;
@@ -123,14 +124,14 @@ module t_phy(
 
 
       repeat (6) begin																							// Repeat the test 3 times
-  		@(posedge clk1f);																								// sync with clock
-  		#4 reset = 1;
-      validin <= 4'b1111;
+  		@(posedge clk4f);																								// sync with clock
+  		#4 reset <= 1;
+      validin <= 4'b1;
   		end
 
 
   		//repeat (15) begin
-  		@(posedge clk1f);
+  		@(posedge clk4f);
   		in0 <= 8'hFF;
   		in1 <= 8'hEE;
   		in2 <= 8'hDD;
@@ -138,19 +139,19 @@ module t_phy(
   		// end
 
 
-  		@(posedge clk1f);
+  		@(posedge clk4f);
   		in0 <= 8'hBB;
   		in1 <= 8'hAA;
   		in2 <= 8'h99;
   		in3 <= 8'h88;
 
-  		@(posedge clk1f);
+  		@(posedge clk4f);
   		in2 <= 8'h77;
   		validin <= 4'b1;
 
 
   		repeat (5) begin
-  		@(posedge clk1f);				// testing static ins
+  		@(posedge clk4f);				// testing static ins
       validin <= 4'b1;
   		end
 
