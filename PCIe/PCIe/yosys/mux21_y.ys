@@ -1,0 +1,68 @@
+#!/bin/bash
+
+
+# Belinda Brown Ramírez
+# Mayo, 2020
+# timna.brown@ucr.ac.cr
+
+
+
+# Full synthesis script
+
+
+# Perform the high-level synthesis of the behavioral design.
+# This produces a generic structural description (RTLIL) that does not depend
+# on a particular technology. The components used in this description
+# correspond to those of the Yosys synthesizer internal library.
+
+#Read the Behavioral desing
+read_verilog ./src/mux2x1_behav.v
+read_verilog -lib ./lib/cmos_cells.v
+
+#Hierarchy module
+hierarchy -check -top mux2x1_behav
+
+#Process to nettlist
+proc
+
+#This performs a series of trivial optimizations and cleanups
+opt
+
+#extract and optimize finite state machines
+fsm
+
+#This performs a series of trivial optimizations and cleanups
+opt
+
+#memory - translate memories to basic cells
+memory
+
+#This performs a series of trivial optimizations and cleanups
+opt
+
+#Mapping the internal cell library
+techmap
+
+#This performs a series of trivial optimizations and cleanups
+opt
+
+#Maping flip-flops to cmos_cells lib
+dfflibmap -liberty ./lib/cmos_cells.lib
+
+#Minimization / Mapping
+abc –liberty ./lib/cmos_cells.lib
+
+#Clean
+clean
+
+#Lib status
+stat -liberty ./lib/cmos_cells.lib
+
+#Writing the structural of the description
+write_verilog ./syn/mux2x1_syn.v
+
+
+#show schemes
+show \mux2x1_behav
+# To save then in diagrams_generated folder
+#show -format ps -prefix ./diagrams_generated/mux2x1_behav
