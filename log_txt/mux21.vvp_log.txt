@@ -1,1 +1,0 @@
-VCD info: dumpfile mux21.vcd opened for output.
