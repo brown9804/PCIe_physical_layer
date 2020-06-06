@@ -36,7 +36,7 @@ module tester(
     reg clk;
     
     initial begin
-		$dumpfile("muxy.vcd");																						// "dump" file
+		$dumpfile("stop_idle.vcd");																						// "dump" file
 	$dumpvars;
 	
         // reset 
