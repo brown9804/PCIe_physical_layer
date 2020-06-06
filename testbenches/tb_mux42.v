@@ -18,10 +18,10 @@
 // Additional Comments:
 // 
 //////////////////////////////////////////////////////////////////////////////////
-`include "mux4x2_behav.v"
-`include "mux4x2_struct.v"
-`include "cmos_cells.v"
-`include "tester.v"
+`include "./src/mux4x2_behav.v"
+`include "./syn/mux4x2_syn.v"
+`include "./lib/cmos_cells.v"
+`include "./testers/t_mux42.v"
 
 module bancoPruebas();
 // conections
