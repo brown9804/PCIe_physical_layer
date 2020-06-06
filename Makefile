@@ -20,7 +20,7 @@
 # 2. For mux 4:1 ---------- mux41
 # 3. For mux 4:2 ---------- mux42
 # 4. For parallel to serial -------- ptos
-# 5. For parallel to serial IDLE -------- ptosdile
+# 5. For parallel to serial IDLE -------- ptosidle
 # 6. For demux 1:2 -------- demux12
 # 7. For demux 1:4 -------- demux14
 # 8. For demux 2:4 -------- demux24
