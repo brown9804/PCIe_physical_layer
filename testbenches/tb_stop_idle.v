@@ -1,7 +1,7 @@
-`include "tester.v"
-`include "serie_paralelo_IDLE.v"
-`include "serie_paralelo_IDLE_struct.v"
-`include "cmos_cells.v"
+`include "./testers/tester.v"
+`include "./src/serie_paralelo_IDLE.v"
+`include "./syn/serie_paralelo_IDLE_syn.v"
+`include "./lib/cmos_cells.v"
 
 module bancoPruebas();
     wire in;
