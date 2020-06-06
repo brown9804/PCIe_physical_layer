@@ -23,7 +23,7 @@ module t_recir_idle (
   output reg valido,
 
   output reg [7:0] in0,
-  output reg[7:0] in1,
+  output reg [7:0] in1,
   output reg [7:0] in2,
   output reg [7:0] in3,
   output reg [3:0] valid_in,
@@ -81,45 +81,40 @@ reg clk32f;
   // Another signals
   #4 reset = 0;
 
-  repeat (30) begin        // reset = 0  7C -> x6
-	@(posedge clk1f);
+  repeat (32) begin        // reset = 0  7C -> x6
+	@(posedge clk4f);
 	reset <= 0;
 	end
 
-	repeat (6) begin																							// Repeat the test
+	repeat (4) begin																							// Repeat the test
 	@(posedge clk1f);																								// sync with clock
-	#4 reset <= 1;
+	#10 reset <= 1;
 	end
 
-  repeat (10) begin																							// Repeat the test
-  @(posedge clk4f);																								// sync with clock
-  #4 reset <= 1;
-  end
-
-  repeat (6) begin																							// Repeat the test
-  @(posedge clk4f);																								// sync with clock
-  #4 reset <= 1;
-  end
-
-  repeat (6) begin																							// Repeat the test
-  @(posedge clk4f);																								// sync with clock
-  #4 reset <= 1;
-  end
-
-  repeat (6) begin																							// Repeat the test
-  @(posedge clk4f);																								// sync with clock
-  #4 reset <= 1;
-  end
-
-  repeat (6) begin																							// Repeat the test
-  @(posedge clk4f);																								// sync with clock
-  #4 reset <= 1;
-  end
-
-  repeat (24) begin																							// Repeat the test
+          ///testing valido/active behave
+	repeat (4) begin															
+  @(posedge clk1f);
+  valido <= ~valido;
+  valid_in <= 4'b1111;
+  {in0} <= 8'hFF;
+	{in1} <= 8'hEE;
+	{in2} <= 8'hDD;
+	{in3} <= 8'hCC;
   @(posedge clk4f);
-  valido <= 0;
+  end
+
+
+
+      //Testing valid in Beha
+  repeat (4) begin																							
+  @(posedge clk1f);
+  valido <= ~valido;
   valid_in <= 0;
+	{in0} <= 8'hBB;
+	{in1} <= 8'hAA;
+	{in2} <= 8'h99;
+	{in3} <= 8'h88;
+
   end
 
   // The stimulus must be changed, where it allows testing to give an idea of ​​the behavior of the signals.
@@ -138,113 +133,31 @@ reg clk32f;
   // 2'b10 = 10
   // 2'b11 = 11
   // If it does not indicate the size, 32 bits are assigned by default, that is, 'b0 = 00000000000000000000000000000000
+  
+  
+  //other test
 
-  repeat (8) begin
-      @(posedge clk1f);           // IN 7C -> 01111100
-          valido <= 0;
-      @(posedge clk1f);
-          valido <= 1;
-      @(posedge clk1f);
-          valido <= 1;
-      @(posedge clk1f);
-          valido <= 1;
-      @(posedge clk1f);
-          valido <= 1;
-      @(posedge clk1f);
-          valido <= 1;
-      @(posedge clk1f);
-          valido <= 0;
-      @(posedge clk1f);
-          valido <= 0;
-	end
-
-      @(posedge clk1f);           // ON VALID
-          valido <= 1;
-
-
-	repeat (6) begin																							// Repeat the test 3 times
-	@(posedge clk1f);																								// sync with clock
-	#4 reset <= 1;
-  valid_in <=1;
-	end
-
-
-	//repeat (15) begin
 	@(posedge clk1f);
+  valido <= 1;
 	{in0} <= 8'hFF;
 	{in1} <= 8'hEE;
 	{in2} <= 8'hDD;
 	{in3} <= 8'hCC;
-	// end
+  valid_in <= 4'b1111;
 
 
 	@(posedge clk1f);
+   valido <= 1;
 	{in0} <= 8'hBB;
 	{in1} <= 8'hAA;
 	{in2} <= 8'h99;
 	{in3} <= 8'h88;
+  valid_in <= 4'b0;
 
 	@(posedge clk1f);
 	{in2} <= 8'h77;
-	valid_in <= 4'b0;
+	#10 reset <= 0;
 
-
-	repeat (5) begin
-	@(posedge clk1f);				// testing static ins
-	valid_in = 4'b1;
-	end
-
-
-
-	//repeat (15) begin
-	@(posedge clk1f);
-	{in0} <= 8'hFF;
-	{in1} <= 8'hEE;
-	{in2} <= 8'hDD;
-	{in3} <= 8'hCC;
-	// end
-
-
-	@(posedge clk1f);
-	{in0} <= 8'hBB;
-	{in1} <= 8'hAA;
-	{in2} <= 8'h99;
-	{in3} <= 8'h88;
-
-	@(posedge clk1f);
-	{in2} <= 8'h77;
-	valid_in <= 4'b0010;
-
-
-	repeat (5) begin
-	@(posedge clk1f);				// testing static ins
-	valid_in = 4'b1111;
-	end
-
-	repeat (15) begin
-	@(posedge clk1f);
-	{in0} <= 8'hFF;
-	{in1} <= 8'hEE;
-	{in2} <= 8'hDD;
-	{in3} <= 8'hCC;
-
-
-	@(posedge clk1f);
-	{in0} <= 8'hBB;
-	{in1} <= 8'hAA;
-	{in2} <= 8'h99;
-	{in3} <= 8'h88;
-
-	@(posedge clk1f);
-	{in2} <= 8'h77;
-	valid_in <= 4'b1;
-
-
-	repeat (5) begin
-	@(posedge clk1f);				// testing static ins
-	valid_in = 4'b1;
-	end
- end
 
   #40 $finish;
   end // end initial block (big one)
