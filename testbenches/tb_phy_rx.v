@@ -13,7 +13,6 @@
 `include "./lib/cmos_cells.v"
 `include "./src/phy_rx.v"
 `include "./syn/phy_rx_syn.v"
-
 `include "./testers/t_phy_rx.v"
 
 module TestBench; // Testbench
@@ -78,7 +77,7 @@ phy_rx_syn phy_x_s(/*AUTOINST*/
     .out2 (out2_STB),
     .out3 (out3_STB),
     .out_rx_tx (out_rx_tx_STB),
-    .valid_out_mux14 (valid_out_mux14TB),
+    .valid_out_mux14 (valid_out_mux14TS),
     // Inputs
     .clk1f (clk1f),
     .clk2f (clk2f),

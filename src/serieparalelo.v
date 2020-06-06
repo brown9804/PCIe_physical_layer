@@ -30,12 +30,13 @@ module serieparalelo(
     input wire reset,
     // OUTPUTS
     output reg [7:0] out,
-    output reg valid                            // salida dato valido
+    output reg valid,                            // salida dato valido
+    output reg active
 );   
     // INTERNAL/AUXILIARY
     reg [7:0] register;             // registro de datos de entrada a enviar
     reg [3:0] BC_counter;           // contador de Palabras BC 
-    reg active;                     // indica comunicación activa entre los modulos
+    //reg active;                     // indica comunicación activa entre los modulos
     reg valido;                      // valid del dato de salida
     
     always @( posedge clk32f ) begin

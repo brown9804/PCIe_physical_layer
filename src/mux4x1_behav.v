@@ -3,7 +3,6 @@
 `include "./src/mux4x2_behav.v"	 // than include the mux2x1 
 `include "./src/ff2in2o.v"	
 `include "./src/ff4in4o.v"
-`include "./src/ff1in1o.v"
 `include "./src/ff4in4ovalid.v"	
 
 //////////////////////////////////////////////////////////////////////////////////

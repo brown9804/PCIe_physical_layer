@@ -64,7 +64,7 @@ module phy_rx(
       .out1 (conec1),
       .out2 (conec2),
       .out3 (conec3),
-      .valid_out (validout_conec),
+      .validout (validout_conec),
       .clk1f (clk1f),
       .clk2f (clk2f),
       .clk4f (clk4f),

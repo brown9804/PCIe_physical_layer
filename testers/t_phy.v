@@ -85,7 +85,7 @@ module t_phy(
     in2 = 8'b0;
     in3 = 8'b0;
     #4 reset = 0;
-    validin = 4'b0;
+    validin = 4'b1111;
 
 
   // This passes the first clock cycle ... Defining initial values ​​....
@@ -100,15 +100,15 @@ module t_phy(
     // 0XEE = 11101110
     // 0XFF = 11111111
 
-    repeat (6) begin
-   		@(posedge clk32f);
-   		reset <= 0;
-      validin <= 4'b0;
+    		repeat (6) begin
+   		@(posedge clk4f);
+   		#10 reset <= 0;
+     		validin <= 4'b0000;
    		end
 
       // Begin Tests
 
-
+/*
       repeat(5) begin         // BC = 10 1111 00
       @(posedge clk4f);
       in0  <=  8'hBC;
@@ -121,17 +121,17 @@ module t_phy(
       in2  <=  8'hBC;
       in3  <=  8'hBC;
       end
+*/
 
-
-      repeat (6) begin																							// Repeat the test 3 times
+ 																						// Repeat the test 3 times
   		@(posedge clk4f);																								// sync with clock
-  		#4 reset <= 1;
-      validin <= 4'b1;
-  		end
+  		#10 reset <= 1;
+      		validin <= 4'b1111;
+  
 
 
-  		//repeat (15) begin
-  		@(posedge clk4f);
+  		repeat (8) begin
+  		@(posedge clk1f);
   		in0 <= 8'hFF;
   		in1 <= 8'hEE;
   		in2 <= 8'hDD;
@@ -139,20 +139,20 @@ module t_phy(
   		// end
 
 
-  		@(posedge clk4f);
+  		@(posedge clk1f);
   		in0 <= 8'hBB;
   		in1 <= 8'hAA;
   		in2 <= 8'h99;
   		in3 <= 8'h88;
 
-  		@(posedge clk4f);
+  		@(posedge clk1f);
   		in2 <= 8'h77;
-  		validin <= 4'b1;
+  		validin <= 4'b111;
+		end
 
-
-  		repeat (5) begin
-  		@(posedge clk4f);				// testing static ins
-      validin <= 4'b1;
+  		repeat (4) begin
+  		@(posedge clk1f);				// testing static ins
+     		validin <= 4'b1111;
   		end
 
       #40 $finish;
@@ -202,7 +202,7 @@ module t_phy(
     // For the clock
     // Initial value to the clock, otherwise it will always be undetermined
     initial	clk 	<= 0;
-    // "toggle" every 2* 10ns
+    // "toggle" every 5* 1ns
     always	#5 clk 	<= ~clk;
 
   endmodule

@@ -1,20 +1,20 @@
 /////////////////////////////////////////////////////////////////////////////////
 // Company: U.C.R EIE
 // Engineer: Brandon Esquivel Molina
-//
+// 
 // Create Date: 19.05.2020
-// Design Name: demux2x4_8bits+VALID with automatic selector
-// Module Name: demux2x4 8BITS + VALID
+// Design Name: demux1x4_8bits+VALID with automatic selector
+// Module Name: demux1x4 8BITS + VALID
 // Project Name: PHY Layer PCIe
 // Target Devices: PCIe
 // Tool Versions: Yosys 0.9 Iverolg release at 2020
-// Description: module deMux2x4 8bits+ valid a submodule in mux4x2 8bits + valid
-// Dependencies:
-//
-// Revision: 0.0
+// Description: module deMux1x4 8bits+ 
+// Dependencies: 
+// 
+// Revision: June 2020
 // Revision 0.01 - File Created
 // Additional Comments:
-//
+// 
 //////////////////////////////////////////////////////////////////////////////////
 `include "./src/demux2x4_behav.v"
 `include "./src/ff2in2o.v"
@@ -37,16 +37,16 @@ module demux1x4_behav (
     output reg [7:0] out1,
     output reg [7:0] out2,
     output reg [7:0] out3,
-    output reg [3:0] valid_out
+    output reg [3:0] validout
 );
 
     // Internal auxilliary
 
 
-    wire [7:0] x_0, x_1;
+    wire [7:0] n0, n1;
     wire [1:0] valid_12, valid_24;
-    wire [7:0] x_2, x_3;
-    wire [7:0] x_4, x_5, x_6, x_7;
+    wire [7:0] n2, n3;
+    wire [7:0] n4, n5, n6, n7;
     wire [3:0] valid_out24, v_out;
     wire [7:0] pre_out0, pre_out1, pre_out2, pre_out3;
 
@@ -55,61 +55,57 @@ module demux1x4_behav (
                     .in    (in),
                     .clk   (clk4f),
                     .reset (reset),
-                    .out0  (x_0),
-                    .out1  (x_1),
+                    .out0  (n0),
+                    .out1  (n1),
                     .valid (valid),
-                    .valid_out(valid_12)
+                    .validout(valid_12)
     );
 
-    // del demux12, al demux24
 
     ff2in2o flops1_2(
                         .clk     (clk2f),
                         .reset   (reset),
-                        .in0     (x_0),
-                        .in1     (x_1),
-                        .out0    (x_2),
-                        .out1    (x_3)
-    );
+                        .in0     (n0),
+                        .in1     (n1),
+                        .out0    (n2),
+                        .out1    (n3)
+    );  
 
-// Sincronizar valid con datos
-    ff4in4ovalid flops1_2valid(
-                        .clk     (clk2f),
-                        .reset   (reset),
-                        .in0     (valid_12[0]),
-                        .in1     (valid_12[1]),
-                        .out0    (valid_24[0]),
-                        .out1    (valid_24[1])
-    );
 
+ff4in4ovalid ffvalid21(		.in0(valid_12[0]),		
+							.in1(valid_12[1]),
+							.out0(valid_24[0]),
+							.out1(valid_24[1]),
+							.clk(clk2f),
+							.reset(reset)	
+);
 
 
 
 
-  //hacia etapa flops de salida
+
+  // To out 4
 
     demux2x4_behav demux_24(
-        .in0      (x_2),
-        .in1      (x_3),
+        .in0      (n2),
+        .in1      (n3),
         .clk      (clk2f),
         .reset    (reset),
-        .out0     (x_4),
-        .out1     (x_5),
-        .out2     (x_6),
-        .out3     (x_7),
-        .valid (valid_24),
-        .valid_out(valid_out24)
+        .out0     (n4),
+        .out1     (n5),
+        .out2     (n6),
+        .out3     (n7),
+        .valid      (valid_24),
+        .validout   (valid_out24)
     );
-
-    /* Segunda etapa de flops o flops de salida. Sincronizan las
-     salidas del demux24 y los envian a la salida del demux14*/
+//Data FF 44
     ff4in4o flops14(
-        .clk           (clk1f), //*************************
-        .reset         (reset),
-        .in0     (x_4),
-        .in1     (x_5),
-        .in2     (x_6),
-        .in3     (x_7),
+        .clk     (clk1f),       
+        .reset   (reset),
+        .in0     (n4),
+        .in1     (n5),
+        .in2     (n6),
+        .in3     (n7),
         .out0    (pre_out0),
         .out1    (pre_out1),
         .out2    (pre_out2),
@@ -129,19 +125,16 @@ module demux1x4_behav (
                         .out1    (v_out[1]),
                         .out2    (v_out[2]),
                         .out3    (v_out[3])
+   
+    );  
 
-    );
 
-
-    /* Se conectan las salidas de la ultima etapa de flops a la
-    salida del mux14 */
     always @(*) begin
         out0 = pre_out0;
         out1 = pre_out1;
         out2 = pre_out2;
         out3 = pre_out3;
-        valid_out = v_out;
-
+        validout = v_out;
     end
 
 endmodule
