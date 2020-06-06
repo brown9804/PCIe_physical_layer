@@ -36,7 +36,7 @@ input validout
 reg [3:0] count;
 
 initial begin
-		$dumpfile("muxy.vcd");																						// "dump" file
+		$dumpfile("mux21.vcd");																						// "dump" file
 		$dumpvars;																									// "dumpping" variables
 		//$display ("clk,\tselector,\tin0,\tin1,\tout,\tcount,\treset");														// print onces
 		//$monitor($time,"%b\t\t%b\t\t%b\t%b\t%b\t%b", clk, selector, in0, in1, out, count,reset); 							// print everytime	

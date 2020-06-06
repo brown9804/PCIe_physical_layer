@@ -51,7 +51,7 @@ reg [3:0] countc;
 reg clk;
 
 initial begin
-		$dumpfile("muxy.vcd");																						// "dump" file
+		$dumpfile("demux14.vcd");																						// "dump" file
 		$dumpvars;																									// "dumpping" variables
 		//$display ("clkf,\tin0,\tin1,\tin2,\tin3,\tvalid,\toutc,\touts,\tcountc,\treset");														// print onces
 		//$monitor($time,"\t%b\t%b\t%b\t%b\t%b\t%b\t%b\t%b\t%b",clkf, in0, in1, in2, in3, valid, outc, outs, countc, reset); 							// print everytime	

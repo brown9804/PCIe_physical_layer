@@ -1,9 +1,9 @@
 `timescale 	1ns/1ps
 
-`include "paralelltoserial.v"
-`include "tester.v"
-`include "paralelltoserial_struct.v"
-`include "cmos_cells.v"
+`include "./src/paralelltoserial.v"
+`include "./testers/t_ptos.v"
+`include "./syn/paralelltoserial_syn.v"
+`include "./lib/cmos_cells.v"
 
 module testbench_ptos;
 
