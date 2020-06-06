@@ -1,6 +1,6 @@
-`include "tester.v"
-`include "serieparalelo.v"
-`include "cmos_cells.v" 
+`include "./testers/t_stop.v"
+`include "./src/serieparalelo.v"
+`include "./lib/cmos_cells.v" 
 
 module bancoPruebas();
     wire in;
