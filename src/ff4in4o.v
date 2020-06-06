@@ -6,7 +6,7 @@
 // Its for 8 bits plus valid
 
   module ff4in4o(
-      input wire clkf,
+      input wire clk,
       input wire reset,
       // Inputs, are 4
       input wire [7:0] in0,
@@ -20,7 +20,7 @@
       output reg [7:0] out3
   );
   // Each positive edge of the clock make these changes
-  always @(posedge clkf)
+  always @(posedge clk)
   //If this happens on a positive edge of the clock, make the following changes for the next clock edge
   begin
     // Reset synchronous
