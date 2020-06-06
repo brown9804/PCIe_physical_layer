@@ -1,0 +1,34 @@
+
+read_verilog paralelltoserial.v
+
+read_verilog -lib cmos_cells.v
+
+hierarchy -check -top paralelo_a_serial
+
+proc
+
+opt
+
+fsm
+
+opt
+
+memory
+
+opt
+
+techmap
+
+opt
+
+dfflibmap -liberty cmos_cells.lib
+
+abc –liberty cmos_cells.lib
+
+clean
+
+stat -liberty cmos_cells.lib
+
+write_verilog paralelltoserial_syn.v
+
+show \paralelo_a_serial

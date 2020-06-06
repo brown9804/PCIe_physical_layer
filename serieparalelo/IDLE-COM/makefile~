@@ -1,0 +1,28 @@
+all: clean  autosyn sed ejecutable tabla
+	echo Simulando valores...
+	gtkwave muxy.vcd
+	echo listo!
+
+ejecutable:
+	echo generando ejecutable...
+	iverilog tb.v -o exe.o
+	echo listo!
+tabla:
+	echo Creando tabla de datas...
+	vvp exe.o
+	echo listo!
+clean:
+	rm -f *.o
+	rm -f *.vcd
+	rm -f serieparalelo_IDLE_syn.v
+	rm -f serieparalelo_IDLE_struct.v
+
+run:
+	echo Simulando valores...
+	gtkwave muxy.vcd
+	echo listo!
+sed:
+	sed -e ' s/serieparalelo_IDLE/serieparalelo_IDLE_struct/' ./serie_paralelo_IDLE_syn.v >> serie_paralelo_IDLE_struct.v
+	rm -f serie_paralelo_IDLE_syn.v
+autosyn: 
+	yosys ./Autosyn.ys

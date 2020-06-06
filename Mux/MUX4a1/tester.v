@@ -21,8 +21,11 @@
 
 module tester(
 	//OUTPUTS
-output reg [7:0] in,
-output reg valid,
+output reg [7:0] in0,
+output reg [7:0] in1,
+output reg [7:0] in2,
+output reg [7:0] in3,
+output reg [3:0] valid,
 //output reg clk,
 output reg clk1f,
 output reg clk2f,
@@ -32,17 +35,9 @@ output reg clk16f,
 output reg clk32f,
 output reg reset,
 	//INPUTS
-input [7:0] out0c,
-input [7:0] out1c,
-input [7:0] out2c,
-input [7:0] out3c,
-input [7:0] out0s,
-input [7:0] out1s,
-input [7:0] out2s,
-input [7:0] out3s,
-input [3:0] valid_outc,
-input [3:0] valid_outs
-
+input [7:0] outc,
+input [7:0] outs,
+input validout
 );
 
 	//Internal
@@ -51,50 +46,42 @@ reg [3:0] countc;
 reg clk;
 
 initial begin
-		
 		$dumpfile("muxy.vcd");									// "dump" file
 		$dumpvars;												// "dumpping" variables	
 		repeat (6) begin
 		@(posedge clk1f);	
-		reset = 0;
+		#4 reset = 0;
 		end		
 
 		repeat (6) begin																							// Repeat the test 3 times
 		@(posedge clk1f);																								// sync with clock																			 	
 		#4 reset = 1;
 		end
-		
-		//repeat (15) begin
-		@(posedge clk4f);		
-		{in} <= 'hFF;
-		@(posedge clk4f);
-		{in} <= 'hDD;
-		
-		@(posedge clk4f);
-		{in} <= 'hEE;
-		@(posedge clk4f);
-		{in} <= 'hCC;
-		@(posedge clk4f);		
-		{in} <= 'hBB;
-		@(posedge clk4f);
-		{in} <= 'h99;
-		@(posedge clk4f);														
-		{in} <= 'hAA;
-		@(posedge clk4f);
-		{in} <= 'h88;
-		@(posedge clk4f);	
-		{in} <= 'h77;
-		
-		@(posedge clk4f);
-		valid <= 4'b0010;
 
-		repeat (15) begin
+
+		//repeat (15) begin
+		@(posedge clk1f);		
+		{in0} <= 'hFF;
+		{in1} <= 'hEE;															
+		{in2} <= 'hDD;
+		{in3} <= 'hCC;
+		// end
+
+
+		@(posedge clk1f);		
+		{in0} <= 'hBB;
+		{in1} <= 'hAA;															
+		{in2} <= 'h99;
+		{in3} <= 'h88;
+
+		@(posedge clk1f);	
+		{in2} <= 'h77;
+		valid <= 4'b0010;
+		
+	
+		repeat (5) begin
 		@(posedge clk1f);				// testing static ins		
 		valid = 4'b1111;
-		end
-
-		repeat (15) begin
-		@(posedge clk1f);
 		end
 
        	$finish;													// save variables finish
@@ -104,41 +91,30 @@ initial begin
 	
 
 	// Initial Values
-	initial	in			<= 7'b0;
+	initial	in0			<= 8'b0;
+	initial in1			<= 8'b0;
+	initial in2			<= 8'b0;
+	initial in3			<= 8'b0;
 	initial valid		<= 4'b1111;	
-	initial reset 		<= 0;
+	initial #2 reset 		<= 0;
 
 	// clock logic
 	initial	clk	 			<= 0;			// Initial value to avoid indeterminations
 	always	#5 clk			<= ~clk;		// toggle every 10ns
 
+	// Positive Transitions Counters
+	initial countc <= 0;
+	always@(posedge outc) begin
+	countc<=countc+1;
+	end
 
 
+	// Positive Transitions Counters
+	initial counts <= 0;
+	always@(posedge outs) begin
+	counts<=counts+1;
+	end
 
-
-reg test;
-
-	always@(posedge clk) begin
-    if(out0c != out0s | out1c != out1s | out2c != out2s | out3c != out3s)
-    begin
-       $display ("ERROR behavioral file and structural file are not the same");
-       test <= 0;
-     end // end display
-
-     else begin
-        test <= 1;
-      end //else
-end // always checker
-
-
-
-
-
-
-
-
-
-	
 	// clks 
 
 	initial clk32f <= 0;
@@ -181,5 +157,21 @@ end // always checker
  	end
 
 
+
+
+
+
+reg tester;
+
+always@(posedge clk) begin
+    if(outc != outs)
+    begin
+       tester <= 0;
+     end // end display
+
+     else begin
+        tester <= 1;
+      end //else
+end // always checker
 
 endmodule
