@@ -8,7 +8,7 @@
 `define FF2IN20
 
   module ff2in2o(
-      input wire clkf,
+      input wire clk,
       input wire reset,
       // Inputs, are 2
       input wire [7:0] in0,
@@ -18,7 +18,7 @@
       output reg [7:0] out1
   );
   // Each positive edge of the clock make these changes
-  always @(posedge clkf)
+  always @(posedge clk)
   //If this happens on a positive edge of the clock, make the following changes for the next clock edge
   begin
     // Reset synchronous
