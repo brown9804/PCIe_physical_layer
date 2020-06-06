@@ -23,7 +23,13 @@ module phy(
   output reg [7:0] out1,
   output reg [7:0] out2,
   output reg [7:0] out3,
-  output reg [3:0] validout
+  output reg [3:0] validout,
+// outputs for recirc module
+  output reg [7:0] out0_recir,
+  output reg [7:0] out1_recir,
+  output reg [7:0] out2_recir,
+  output reg [7:0] out3_recir,
+  output reg [7:0] valid_out_recir
   );
 
 
@@ -35,13 +41,19 @@ wire txrx;
 wire [3:0] v_out_conec;
 // For outputs
 wire [7:0] o0, o1, o2, o3;
-
-
+wire [7:0] rc0, rc1, rc2, rc3;
+wire [7:0] valid_orecir;
 // Transmiiter Layer
 // Layer of the physical transmitter
 phy_tx_b phy_tx_f(/*AUTOINST*/
     // Outputs
     .out_b (txrx),
+    // outputs for recirc module
+    .out0_recir (rc0),
+    .out1_recir (rc1),
+    .out2_recir (rc2),
+    .out3_recir (rc3),
+    .valid_out_recir (valid_orecir),
     // Inputs
     .clk1f (clk1f),
     .clk2f (clk2f),
@@ -80,6 +92,11 @@ always@(*) begin
  out1 = o1;
  out2 = o2;
  out3 = o3;
+ out0_recir = rc0;
+ out1_recir = rc1;
+ out2_recir = rc2;
+ out3_recir = rc3;
+ valid_out_recir = valid_orecir;
 end
 
 
