@@ -38,8 +38,16 @@ wire [7:0] out0_BTB, out1_BTB, out2_BTB, out3_BTB, out_rx_txBTB;
 wire [7:0] out0_STB, out1_STB, out2_STB, out3_STB, out_rx_txSTB;
 wire [3:0] validout_TB;
 wire [3:0] validin_TB;
-
-
+wire [7:0] out0_recir;
+wire [7:0] out1_recir;
+wire [7:0] out2_recir;
+wire [7:0] out3_recir;
+wire [7:0] valid_out_recir;
+wire [7:0] out0_recir_s;
+wire [7:0] out1_recir_s;
+wire [7:0] out2_recir_s;
+wire [7:0] out3_recir_s;
+wire [7:0] valid_out_recir_s;
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////
@@ -48,6 +56,11 @@ wire [3:0] validin_TB;
 ///////////////////////////////////////////////////////////////////////////////////////////
 phy phy_tb(/*AUTOINST*/
   //Outputs
+  .out0_recir (out0_recir),
+  .out1_recir (out1_recir),
+  .out2_recir (out2_recir),
+  .out3_recir (out3_recir),
+  .valid_out_recir (valid_out_recir),
   .out0 (out0_BTB),
   .out1 (out1_BTB),
   .out2 (out2_BTB),
@@ -75,6 +88,11 @@ phy phy_tb(/*AUTOINST*/
 
 phy_syn phy_syn_tb(/*AUTOINST*/
   //Outputs
+  .out0_recir (out0_recir_s),
+  .out1_recir (out1_recir_s),
+  .out2_recir (out2_recir_s),
+  .out3_recir (out3_recir_s),
+  .valid_out_recir (valid_out_recir_s),
   .out0 (out0_STB),
   .out1 (out1_STB),
   .out2 (out2_STB),
@@ -101,6 +119,16 @@ phy_syn phy_syn_tb(/*AUTOINST*/
 
 t_phy t_phy_tb(/*AUTOINST*/
   //Outputs
+  .out0_recir (out0_recir),
+  .out1_recir (out1_recir),
+  .out2_recir (out2_recir),
+  .out3_recir (out3_recir),
+  .valid_out_recir (valid_out_recir),
+  .out0_recir_s (out0_recir_s),
+  .out1_recir_s (out1_recir_s),
+  .out2_recir_s (out2_recir_s),
+  .out3_recir_s (out3_recir_s),
+  .valid_out_recir_s (valid_out_recir_s),
   .out0 (out0_BTB),
   .out1 (out1_BTB),
   .out2 (out2_BTB),
@@ -110,7 +138,7 @@ t_phy t_phy_tb(/*AUTOINST*/
   .out1_s (out1_STB),
   .out2_s (out2_STB),
   .out3_s (out3_STB),
-
+  
   .validout (validout_TB),
   // Inputs
   .clk1f (clk1f),
