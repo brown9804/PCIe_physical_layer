@@ -6,7 +6,7 @@
 `define FF4IN40VALID
 
   module ff4in4ovalid(
-      input wire clkf,
+      input wire clk,
       input wire reset,
       // Inputs, are 4
       input wire  in0,
@@ -20,7 +20,7 @@
       output reg  out3
   );
   // Each positive edge of the clock make these changes
-  always @(posedge clkf)
+  always @(posedge clk)
   //If this happens on a positive edge of the clock, make the following changes for the next clock edge
   begin
     // Reset synchronous
