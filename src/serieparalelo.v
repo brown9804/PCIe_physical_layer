@@ -21,7 +21,7 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-module serieparalelo_IDLE(
+module serieparalelo(
     
     // INPUTS
     input wire in,                          // entradas de 1 bit a 32f
@@ -29,13 +29,14 @@ module serieparalelo_IDLE(
     input wire clk4f,                       // f del paralelo 32f/8 datos = 4f
     input wire reset,
     // OUTPUTS
-    output reg valido                           // salida dato valido
+    output reg [7:0] out,
+    output reg valid                            // salida dato valido
 );   
     // INTERNAL/AUXILIARY
     reg [7:0] register;             // registro de datos de entrada a enviar
     reg [3:0] BC_counter;           // contador de Palabras BC 
     reg active;                     // indica comunicación activa entre los modulos
-    //reg [7:0] out;
+    reg valido;                      // valid del dato de salida
     
     always @( posedge clk32f ) begin
         if (~reset) begin
@@ -52,7 +53,7 @@ module serieparalelo_IDLE(
         if (~reset) begin
             BC_counter   <=  0;          // condicion de reset para contador de BC
             valido       <=  0;          // set del valido de salida       
-            //out          <=  0;          // salida a cero 
+            out          <=  0;          // salida a cero 
         end else begin
 
         // contador de BC 
@@ -71,20 +72,20 @@ module serieparalelo_IDLE(
                 valido = 0;                          // en otro caso, no
             end
 
-   // Salidas         
-   /* if ( valido ) begin
-        //out <= register;                          // Trasegando dato
-        //valid <= 1;
+    // Salidas         
+    if ( valido ) begin
+        out <= register;                          // Trasegando dato
+        valid <= 1;
         end else begin
-            //out <= out;                             // mantiene ultimo valor de salida en caso de valid = 0
-            //valid <= 0;
-        end*/
+            out <= out;                             // mantiene ultimo valor de salida en caso de valid = 0
+            valid <= 0;
+        end
     end
 end
 
 // inicia logica combinacional
 always @(*) begin                   // logica para la senal de active
-if(BC_counter >= 4) begin      		// cuando se llega a 4 BC se activa active, en otro contador es cero, esto indica el control para el inicio de envio de palabras
+if(BC_counter >= 4) begin      // cuando se llega a 4 BC se activa active, en otro contador es cero, esto indica el control para el inicio de envio de palabras
     active = 1;
 end else begin
      active = 0;
