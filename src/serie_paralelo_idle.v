@@ -4,25 +4,25 @@
 //////////////////////////////////////////////////////////////////////////////////
 // Company: U.C.R E.I.E
 // Engineer: Brandon Esquivel Molina
-//
+// 
 // Create Date: 26.05.2020
-// Design Name: Serial to parallel Module
-// Module Name: Serial to parallel Module
+// Design Name: Serial to parallel Module 
+// Module Name: Serial to parallel Module 
 // Project Name: PHY Layer PCIe
 // Target Devices: PCIe
 // Tool Versions: Yosys 0.9 Iverolg release at 2020
-// Description:
+// Description: 
 // Dependencies:
-//
-// Revision: 1.0  all good
+// 
+// Revision: 1.0  all good 
 // Revision 0.01 - File Created
-// Additional Comments:
-//
+// Additional Comments: 
+// 
 //////////////////////////////////////////////////////////////////////////////////
 
 
-module serieparaleloIDL(
-
+module serieparalelo_IDLE(
+    
     // INPUTS
     input wire in,                          // entradas de 1 bit a 32f
     input wire clk32f,                      // f max
@@ -30,17 +30,17 @@ module serieparaleloIDL(
     input wire reset,
     // OUTPUTS
     output reg valido                           // salida dato valido
-);
+);   
     // INTERNAL/AUXILIARY
     reg [7:0] register;             // registro de datos de entrada a enviar
-    reg [3:0] BC_counter;           // contador de Palabras BC
+    reg [3:0] BC_counter;           // contador de Palabras BC 
     reg active;                     // indica comunicación activa entre los modulos
     //reg [7:0] out;
-
+    
     always @( posedge clk32f ) begin
         if (~reset) begin
             register    <=  0;
-        end else begin
+        end else begin 
             register  <=  {register[6:0], in};  // registro desplazando bit a bit de entrada
         end
     end
@@ -51,11 +51,11 @@ module serieparaleloIDL(
     always @(posedge clk4f) begin
         if (~reset) begin
             BC_counter   <=  0;          // condicion de reset para contador de BC
-            valido       <=  0;          // set del valido de salida
-            //out          <=  0;          // salida a cero
+            valido       <=  0;          // set del valido de salida       
+            //out          <=  0;          // salida a cero 
         end else begin
 
-        // contador de BC
+        // contador de BC 
         if (register == 'hBC) begin
                 if (~active) begin                  // si no hay active
                     BC_counter  <= BC_counter + 1;  // contador aumenta
@@ -71,7 +71,7 @@ module serieparaleloIDL(
                 valido = 0;                          // en otro caso, no
             end
 
-   // Salidas
+   // Salidas         
    /* if ( valido ) begin
         //out <= register;                          // Trasegando dato
         //valid <= 1;

@@ -4,11 +4,9 @@
 
 //            FLIP FlOP 2 inputs and 2 outputs
 // Its for 8 bits plus valid
-`ifndef FF2IN20
-`define FF2IN20
 
   module ff2in2o(
-      input wire clk,
+      input wire clkf,
       input wire reset,
       // Inputs, are 2
       input wire [7:0] in0,
@@ -17,10 +15,8 @@
       output reg [7:0] out0,
       output reg [7:0] out1
   );
-
-
   // Each positive edge of the clock make these changes
-  always @(posedge clk)
+  always @(posedge clkf)
   //If this happens on a positive edge of the clock, make the following changes for the next clock edge
   begin
     // Reset synchronous
@@ -36,9 +32,3 @@
   end // end always posedge clk
 
 endmodule
-
-
-// Local Variables:
-// verilog-library-directories:("."):
-// End:
-`endif

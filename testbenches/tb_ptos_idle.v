@@ -1,61 +1,44 @@
-// Michelle Gutiérrez
-// Cicuitos Digitales 2 - Proyecto1
-// Paralelltoserial con IDLE
+`timescale 	1ns/1ps
 
-
-
-`timescale 	100ns				/ 100ns
-
-`include "./src/paralelltoserial_IDLE.v"
-`include "./src/paralelltoserial_IDLE_syn.v"
-`include "./testers/t_ptos_idle.v"
-
+`include "paralelltoserial_IDLE.v"
+`include "tester.v"
+`include "paralelltoserial_IDLE_struct.v"
+`include "cmos_cells.v"
 
 module testbench_ptos_idle;
 
 
  wire active;
  wire reset;
- wire clk;
- wire clk1f;
- wire clk2f;
  wire clk4f;
- wire clk8f;
- wire clk16f;
  wire clk32f;
- wire out;
- wire out_s;
+ wire outc;
+ wire outs;
 
-
-paralelo_a_serial_IDLE paralelo_a_serialtb(
+paralelo_a_serial_IDLE paralelo_a_serialtb_b(
                                         .active  (active),
                                         .reset (reset),
                                         .clk32f (clk32f),
-                                        .out    (out)
+                                        .out    (outc)
 );
 
-paralelo_a_serial_IDLE_syn paralelo_a_serialdile_syntb(
+
+paralelo_a_serial_IDLE_struct paralelo_a_serialtb_s(
                                         .active  (active),
                                         .reset (reset),
                                         .clk32f (clk32f),
-                                        .out    (out_s)
+                                        .out    (outs)
 );
 
 
-t_ptos_idle t_ptostb(
+
+
+t_ptos_idle t_ptostb(      
                       .active (active),
                       .reset (reset),
-                      .clk   (clk),
-                      .clk1f (clk1f),
-                      .clk2f (clk2f),
-                      .clk4f (clk4f),
-                      .clk8f (clk8f),
-                      .clk16f (clk16f),
                       .clk32f (clk32f),
-                      .out    (out),
-                      .out_s    (out_s),
-
-
+                      .outc    (outc),
+                      .outs    (outs)
 );
 
-endmodule
+endmodule 

@@ -2,12 +2,9 @@
 
 //            FLIP FlOP 4 inputs and 4 outputs
 // Its for 1 bit
-`ifndef FF4IN40VALID
-`define FF4IN40VALID
-
 
   module ff4in4ovalid(
-      input wire clk,
+      input wire clkf,
       input wire reset,
       // Inputs, are 4
       input wire  in0,
@@ -21,7 +18,7 @@
       output reg  out3
   );
   // Each positive edge of the clock make these changes
-  always @(posedge clk)
+  always @(posedge clkf)
   //If this happens on a positive edge of the clock, make the following changes for the next clock edge
   begin
     // Reset synchronous
@@ -41,9 +38,3 @@
   end // end always posedge clk
 
 endmodule
-
-
-// Local Variables:
-// verilog-library-directories:("."):
-// End:
-`endif

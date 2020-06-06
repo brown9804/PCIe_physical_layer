@@ -1,31 +1,10 @@
-//////////////////////////////////////////////////////////////////////////////////
-// Company: U.C.R E.I.E
-// Engineer: Brandon Esquivel Molina
-//
-// Create Date: 26.05.2020
-// Design Name: Serial to parallel TESTBENCH
-// Module Name: Serial to parallel TESTBENCH 
-// Project Name: PHY Layer PCIe
-// Target Devices: PCIe
-// Tool Versions: Yosys 0.9 Iverolg release at 2020
-// Description:
-// Dependencies:
-//
-// Revision: 1.0  all good
-// Revision 0.01 - File Created
-// Additional Comments:
-//
-//////////////////////////////////////////////////////////////////////////////////
-
-
-
-`include "./testers/t_stop.v"
-`include "./src/serieparalelo.v"
-`include "./lib/cmos_cells.v"
+`include "tester.v"
+`include "serieparalelo.v"
+`include "cmos_cells.v" 
 
 module bancoPruebas();
     wire in;
-    wire [7:0] out;
+    wire [7:0] outc;
     wire [7:0] outs;
     wire reset;
     wire clk4f;
@@ -33,7 +12,7 @@ module bancoPruebas();
     wire clk32f;
 
 tester Probador(
-                    .out(out),
+                    .outc(outc),
  		            .outs(outs),
                     .in(in),
                     .clk4f(clk4f),
@@ -47,7 +26,7 @@ serieparalelo spc (
                     .clk32f(clk32f),
                     .clk4f(clk4f),
                     .reset(reset),
-                    .out(out),
+                    .out(outc),
                     .valid(valid)
 );
 
