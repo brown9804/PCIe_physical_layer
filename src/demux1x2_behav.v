@@ -1,3 +1,4 @@
+`timescale 1ns/1ps
 //////////////////////////////////////////////////////////////////////////////////
 // Company: U.C.R EIE
 // Engineer: Brandon Esquivel Molina
@@ -29,7 +30,7 @@ module demux1x2_behav (
     // Outputs
     output reg [7:0] out0,
     output reg [7:0] out1,
-    output reg [1:0] valid_out
+    output reg [1:0] validout
 
 );
    
@@ -54,18 +55,18 @@ module demux1x2_behav (
             if (selector) begin
                 if (valid) begin
                     node0 <= in;
-                    valid_out[0] <= valid;
+                    validout[0] <= valid;
                 end else begin
                     node0 <= node0;
-                    valid_out[0] <= valid;
+                    validout[0] <= valid;
                 end
             end else begin
                 if (valid) begin
                     node1 <= in;
-                    valid_out[1] <= 1;
+                    validout[1] <= 1;
                 end else begin
                     node1 <= node1;
-                    valid_out[1] <= 0;
+                    validout[1] <= 0;
                 end
             end
         end
