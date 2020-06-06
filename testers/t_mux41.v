@@ -46,7 +46,7 @@ reg [3:0] countc;
 reg clk;
 
 initial begin
-		$dumpfile("muxy.vcd");									// "dump" file
+		$dumpfile("mux41.vcd");									// "dump" file
 		$dumpvars;												// "dumpping" variables	
 		repeat (6) begin
 		@(posedge clk1f);	
