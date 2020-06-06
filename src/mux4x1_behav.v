@@ -63,7 +63,7 @@ ff4in4o ff4(				.in0(in0),
 							.out1(n1),
 							.out2(n2),
 							.out3(n3),
-							.clkf(clk1f),
+							.clk(clk1f),
 							.reset(reset)
 
 ); 
@@ -76,7 +76,7 @@ ff4in4ovalid ffvalid42(		.in0(valid[0]),		// sincronizando valids
 							.out1(valid_n[1]),
 							.out2(valid_n[2]),
 							.out3(valid_n[3]),
-							.clkf(clk1f),
+							.clk(clk1f),
 							.reset(reset)	
 
 
@@ -107,7 +107,7 @@ ff2in2o ff42(				.in0(n4),
 							.in1(n5),
 							.out0(n6),
 							.out1(n7),
-							.clkf(clk2f),
+							.clk(clk2f),
 							.reset(reset)
 ); 
 
@@ -116,7 +116,7 @@ ff4in4ovalid ffvalid21(		.in0(valid_out[0]),		// sincronizando valids, solo se u
 							.in1(valid_out[1]),
 							.out0(valid_21[0]),
 							.out1(valid_21[1]),
-							.clkf(clk2f),
+							.clk(clk2f),
 							.reset(reset)	
 );
 
