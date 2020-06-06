@@ -2,7 +2,7 @@
 //////////////////////////////////////////////////////////////////////////////////
 // Company: U.C.R E.I.E
 // Engineer: Brandon Esquivel Molina
-//
+// 
 // Create Date: 19.05.2020
 // Design Name: mux2x1_8bits+VALID with automatic selector
 // Module Name: Tester for mux2x1 8BITS + VALID
@@ -11,11 +11,11 @@
 // Tool Versions: Yosys 0.9 Iverolg release at 2020
 // Description: tester for module Mux2x1 8bits+ valid a submodule in mux4x2 8bits + valid first level L1
 // Dependencies: mux2x1_behav
-//
+// 
 // Revision: 1.0  -> Change Sruct of valid, putting out of Ins busses
 // Revision 0.01 - File Created
 // Additional Comments: A conversion of MUX2X1 4bits
-//
+// 
 //////////////////////////////////////////////////////////////////////////////////
 
 
@@ -46,56 +46,56 @@ reg [3:0] countc;
 reg clk;
 
 initial begin
-		$dumpfile("mux41.vcd");									// "dump" file
-		$dumpvars;												// "dumpping" variables
+		$dumpfile("muxy.vcd");									// "dump" file
+		$dumpvars;												// "dumpping" variables	
 		repeat (6) begin
-		@(posedge clk);
-		reset = 0;
-		end
+		@(posedge clk1f);	
+		#4 reset = 0;
+		end		
 
 		repeat (6) begin																							// Repeat the test 3 times
-		@(posedge clk);																								// sync with clock
+		@(posedge clk1f);																								// sync with clock																			 	
 		#4 reset = 1;
 		end
 
 
 		//repeat (15) begin
-		@(posedge clk1f);
+		@(posedge clk1f);		
 		{in0} <= 'hFF;
-		{in1} <= 'hEE;
+		{in1} <= 'hEE;															
 		{in2} <= 'hDD;
 		{in3} <= 'hCC;
 		// end
 
 
-		@(posedge clk1f);
+		@(posedge clk1f);		
 		{in0} <= 'hBB;
-		{in1} <= 'hAA;
+		{in1} <= 'hAA;															
 		{in2} <= 'h99;
 		{in3} <= 'h88;
 
-		@(posedge clk1f);
+		@(posedge clk1f);	
 		{in2} <= 'h77;
 		valid <= 4'b0010;
-
-
+		
+	
 		repeat (5) begin
-		@(posedge clk1f);				// testing static ins
+		@(posedge clk1f);				// testing static ins		
 		valid = 4'b1111;
 		end
 
        	$finish;													// save variables finish
 		end																// initial begin
+	
 
-
-
+	
 
 	// Initial Values
 	initial	in0			<= 8'b0;
 	initial in1			<= 8'b0;
 	initial in2			<= 8'b0;
 	initial in3			<= 8'b0;
-	initial valid		<= 4'b1111;
+	initial valid		<= 4'b1111;	
 	initial #2 reset 		<= 0;
 
 	// clock logic
@@ -115,7 +115,7 @@ initial begin
 	counts<=counts+1;
 	end
 
-	// clks
+	// clks 
 
 	initial clk32f <= 0;
     initial clk16f <= 0;
@@ -128,7 +128,7 @@ initial begin
     // Faster frequency
     always @(posedge clk) begin
 		clk32f <= ~clk32f; // if was LOW change to HIGH
-        end
+        end 
     //////////////////////////////
     // For 16 Hz
     always @(posedge clk32f) begin
@@ -166,7 +166,6 @@ reg tester;
 always@(posedge clk) begin
     if(outc != outs)
     begin
-       $display ("ERROR behavioral file and structural file are not the same");
        tester <= 0;
      end // end display
 
