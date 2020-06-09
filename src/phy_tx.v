@@ -1,4 +1,3 @@
-
 // Belinda Brown Ramírez
 // Mayo, 2020
 // timna.brown@ucr.ac.cr
@@ -83,7 +82,7 @@ module phy_tx_b (
       );
 
       // Serial parallel idle
-      serieparalelo_IDLE spidle(
+      serieparalelo_IDLE spidle(/*AUTOINST*/
           // OUTPUTS
           .valido  (active_inter),
           // Inputs
