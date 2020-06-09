@@ -44,7 +44,7 @@ module phy_rx(
     wire [3:0] validout_conec;
 
 
-    serieparalelo c1(
+    serieparalelo c1(/*AUTOINST*/
         // OUTPUTS
         .out (in_demux),
         .reset (reset),
@@ -58,7 +58,7 @@ module phy_rx(
 
     );
 
-    demux1x4_behav c2(
+    demux1x4_behav c2(/*AUTOINST*/
       //OUTPUTS
       .out0 (conec0),
       .out1 (conec1),
@@ -74,7 +74,7 @@ module phy_rx(
       .valid (validin)
     );
 
-    paralelo_a_serial_IDLE c3(
+    paralelo_a_serial_IDLE c3(/*AUTOINST*/
         // OUTPUTS
         .out (tx_rx),
         // INPUTS
