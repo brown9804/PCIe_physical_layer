@@ -39,6 +39,7 @@ module phy_rx(
     wire validin;
     // Wire from par-serno to out of block
     wire tx_rx;
+    reg  [7:0] Rin_demux;
     // Wire to connect the outputs
     wire [7:0] conec0, conec1, conec2, conec3;
     wire [3:0] validout_conec;
@@ -70,7 +71,7 @@ module phy_rx(
       .clk4f (clk4f),
       .reset (reset),
       //INPUTS
-      .in (in_demux),
+      .in (Rin_demux),
       .valid (validin)
     );
 
@@ -91,6 +92,13 @@ module phy_rx(
         out_rx_tx = tx_rx;
         valid_out_mux14 = validout_conec;
     end
+always@(posedge clk4f) begin
+  
+Rin_demux <= in_demux;
+
+end
+
+
 
 endmodule
 

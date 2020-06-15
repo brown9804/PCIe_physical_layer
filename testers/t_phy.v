@@ -62,99 +62,58 @@ module t_phy(
   // simple to do it is only with $ dumpvars since this way they all assign them to the test bench
       $dumpvars;
 
-  // The stimulus must be changed, where it allows testing to give an idea of ​​the behavior of the signals.
-  // Therefore, the inputs will be initialized with a value chosen between one and zero. Since they are not defined
-  // initial conditions in the algorithm request. They are personally chosen.
 
-  // VERILOG ASSIGNMENTS FOR NUMBERS - FORMAT
-  // 'b binary base
-  // 'd Decimal base
-  // 'h Hexadecimal base
-  // 'or octal base
-  // and what comes after the letter is the value then in the case of binary
-  // the following examples are considered for understanding
-  // 2'b0 = 2'b00 = 00
-  // 2'b1 = 2'b01 = 01
-  // 2'b10 = 10
-  // 2'b11 = 11
-  // If it does not indicate the size, 32 bits are assigned by default, that is, 'b0 = 00000000000000000000000000000000
-  // This passes the first clock cycle ... Defining initial values ​​....
-    // Inputs
-    in0 = 8'b0;
-    in1 = 8'b0;
-    in2 = 8'b0;
-    in3 = 8'b0;
-    #4 reset = 0;
-    validin = 4'b1111;
-
-
-  // This passes the first clock cycle ... Defining initial values ​​....
-
-    // Binary, Hexadecimal
-    // 0x88 = 10001000
-    // 0x99 = 10011001
-    // 0xAA = 10101010
-    // 0xBB = 10111011
-    // 0xCC = 11001100
-    // 0xDD = 11011101
-    // 0XEE = 11101110
-    // 0XFF = 11111111
-
-    		repeat (6) begin
-   		@(posedge clk4f);
-   		#10 reset <= 0;
-     		validin <= 4'b0000;
-   		end
-
-      // Begin Tests
-
-/*
-      repeat(5) begin         // BC = 10 1111 00
-      @(posedge clk4f);
-      in0  <=  8'hBC;
-      in1  <=  8'hBC;
-      in2  <=  8'hBC;
-      in3  <=  8'hBC;
-      @(posedge clk4f);
-      in0  <=  8'hBC;
-      in1  <=  8'hBC;
-      in2  <=  8'hBC;
-      in3  <=  8'hBC;
-      end
-*/
-
- 																						// Repeat the test 3 times
-  		@(posedge clk4f);																								// sync with clock
-  		#10 reset <= 1;
-      		validin <= 4'b1111;
-  
-
-
-  		repeat (8) begin
-  		@(posedge clk1f);
-  		in0 <= 8'hFF;
-  		in1 <= 8'hEE;
-  		in2 <= 8'hDD;
-  		in3 <= 8'hCC;
-  		// end
-
-
-  		@(posedge clk1f);
-  		in0 <= 8'hBB;
-  		in1 <= 8'hAA;
-  		in2 <= 8'h99;
-  		in3 <= 8'h88;
-
-  		@(posedge clk1f);
-  		in2 <= 8'h77;
-  		validin <= 4'b111;
-		end
-
-  		repeat (4) begin
-  		@(posedge clk1f);				// testing static ins
-     		validin <= 4'b1111;
+    // reset
+      repeat (32) begin        
+  		@(posedge clk4f);
+  		reset <= 0;
   		end
 
+      /*@(posedge clk1f);
+      {in0} = 'hFF;
+      {in1} = 'hEE;
+      {in2} = 'hDD;
+      {in3} = 'hCC;*/
+
+
+      @(posedge clk32f);																						
+  		#226 reset <= 1;
+	
+      
+
+    repeat (4) begin      // setup delay
+  		@(posedge clk4f);
+      validin <= validin;
+    end
+
+    repeat (32) begin
+       @(posedge clk4f);
+      end
+
+    repeat (32) begin
+       @(posedge clk4f);
+      end
+      repeat (32) begin
+      @(posedge clk1f);
+      validin <= 4'b1111;
+      //@(posedge clk1f);
+  		{in0} <= 'hBB;
+  		{in1} <= 'hAA;
+  		{in2} <= 'h99;
+  		{in3} <= 'h88;
+      end
+
+    repeat (32) begin
+       @(posedge clk4f);
+      end
+
+      repeat (8) begin
+       @(posedge clk4f);
+        reset <= 0;
+      @(posedge clk1f);
+      end
+
+  		
       #40 $finish;
       end // end initial block (big one)
 
@@ -167,6 +126,19 @@ module t_phy(
       initial clk2f <= 0;
       initial clk1f <= 0;
 
+
+      initial in0 <= 'h00;
+      initial in1 <= 'h00;
+      initial in2 <= 'h00;
+      initial in3 <= 'h00;
+      initial validin <= 4'b0000;
+
+      // For the clock
+      // Initial value to the clock, otherwise it will always be undetermined
+      initial	clk 	<= 0;
+
+    // "toggle" every 5* 1ns
+    always	#10 clk 	<= ~clk;
 
       // Faster frequency
       always @(posedge clk) begin
@@ -199,11 +171,7 @@ module t_phy(
       clk1f <= ~clk1f; // if was LOW change to HIGH
     end
 
-    // For the clock
-    // Initial value to the clock, otherwise it will always be undetermined
-    initial	clk 	<= 0;
-    // "toggle" every 5* 1ns
-    always	#5 clk 	<= ~clk;
+
 
   endmodule
 

@@ -19,6 +19,7 @@ module phy(
   input wire [7:0] in2,
   input wire [7:0] in3,
   input wire [3:0] validin,
+
   output reg [7:0] out0,
   output reg [7:0] out1,
   output reg [7:0] out2,
@@ -35,8 +36,10 @@ module phy(
 
 // Connect the rx to tx
 wire rxtx;
+reg txrxR;
+wire wtxrxR;
 // Connect the tx to rx
-wire txrx;
+reg txrx;
 // Valid out
 wire [3:0] v_out_conec;
 // For outputs
@@ -47,7 +50,7 @@ wire [7:0] valid_orecir;
 // Layer of the physical transmitter
 phy_tx_b phy_tx_f(/*AUTOINST*/
     // Outputs
-    .out_b (txrx),
+    .out_b (wtxrxR),
     // outputs for recirc module
     .out0_recir (rc0),
     .out1_recir (rc1),
@@ -85,8 +88,12 @@ phy_rx phy_rx_f(/*AUTOINST*/
     .reset (reset),
     .in (txrx)
 );
+    always@(posedge clk32f) begin
+      txrx <= txrxR;
+  end
 
 always@(*) begin
+  txrxR = wtxrxR;
  validout = v_out_conec;
  out0 = o0;
  out1 = o1;

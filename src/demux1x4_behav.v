@@ -16,7 +16,7 @@
 // Additional Comments:
 // 
 //////////////////////////////////////////////////////////////////////////////////
-`include "./src/demux2x4_behav.v"
+`include "./src/demux1x2_behav.v"
 `include "./src/ff2in2o.v"
 `include "./src/ff4in4o.v"
 `include "./src/ff4in4ovalid.v"
@@ -85,7 +85,25 @@ ff4in4ovalid ffvalid21(		.in0(valid_12[0]),
 
 
   // To out 4
-
+  demux1x2_behav  demux12A(
+                    .in    (n2),
+                    .clk   (clk2f),
+                    .reset (reset),
+                    .out0  (n4),
+                    .out1  (n5),
+                    .valid (valid_24[0]),
+                    .validout(valid_out24[1:0])
+    );
+    demux1x2_behav  demux12B(
+                    .in    (n3),
+                    .clk   (clk2f),
+                    .reset (reset),
+                    .out0  (n6),
+                    .out1  (n7),
+                    .valid (valid_24[1]),
+                    .validout(valid_out24[3:2])
+    );
+/*
     demux2x4_behav demux_24(
         .in0      (n2),
         .in1      (n3),
@@ -97,7 +115,8 @@ ff4in4ovalid ffvalid21(		.in0(valid_12[0]),
         .out3     (n7),
         .valid      (valid_24),
         .validout   (valid_out24)
-    );
+    );*/
+
 //Data FF 44
     ff4in4o flops14(
         .clk     (clk1f),       

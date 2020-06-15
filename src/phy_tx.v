@@ -24,7 +24,7 @@ module phy_tx_b (
     input wire [7:0] in1,
     input wire [7:0] in2,
     input wire [7:0] in3,
-    input wire in_rx_tx,            // active/valid from Rx
+    input wire in_rx_tx,            // active from Rx
     input wire [3:0] validmux41,
     // Valid for inputs
  
@@ -86,7 +86,7 @@ module phy_tx_b (
           // OUTPUTS
           .valido  (active_inter),
           // Inputs
-          .in        (in_rx_tx),
+          .in     (in_rx_tx),
           .clk32f (clk32f),
           .clk4f (clk4f),
           .reset (reset)
